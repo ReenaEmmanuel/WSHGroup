@@ -15,11 +15,13 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSelectModule } from "@angular/material/select";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatTableModule } from '@angular/material/table';
 
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
+import { UserlistComponent } from './userlist/userlist.component';
 
 
 
@@ -31,7 +33,8 @@ import { HomeComponent } from './home/home.component';
     HeaderComponent,
     LoginComponent,
     SignupComponent,
-    HomeComponent
+    HomeComponent,
+    UserlistComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import { HomeComponent } from './home/home.component';
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatSelectModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTableModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

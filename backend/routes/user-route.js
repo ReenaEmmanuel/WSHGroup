@@ -72,4 +72,19 @@ router.post("/login", (req, res, next) => {
     });
 });
 
+//Get User List for Admin
+router.get("/getuserlist", function (req, res) {
+  User.findAll()
+    .then((userList) => {
+      res.json(userList);
+      return userList;
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: "Error",
+      });
+    });
+});
+
 module.exports = router;
