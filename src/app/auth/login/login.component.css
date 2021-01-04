@@ -1,7 +1,20 @@
+mat-card {
+  width: 20%;
+  margin-top: 12%;
+  margin-left: 65%;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+}
 mat-form-field {
   width: 100%;
 }
 
 mat-spinner {
   margin: auto;
+}
+
+.login_button {
+  width: 100%;
+
 }

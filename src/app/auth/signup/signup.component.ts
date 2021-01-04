@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { Router } from "@angular/router";
 import { AuthService } from "../auth.service";
 
 
@@ -11,7 +12,7 @@ import { AuthService } from "../auth.service";
 export class SignupComponent {
   isLoading = false;
   UsrRole = 0;
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, private router: Router) {}
 
   onSignup(form: NgForm) {
     if (form.invalid) {
@@ -19,14 +20,15 @@ export class SignupComponent {
     }
     this.isLoading = true;
 
-    // if(form.value.UsrRole == "Service Provider"){
-    //   this.UsrRole = 1;
-    // }
-    // else{
-    //   this.UsrRole = 2;
-    // }
+    if(form.value.UsrRole == "Service Provider"){
+      this.UsrRole = 1;
+    }
+    else{
+      this.UsrRole = 2;
+    }
 
+    this.authService.createUser(form.value.FirstName, form.value.LastName, form.value.Age, form.value.Email, form.value.UsrPwd, this.UsrRole);
 
-    this.authService.createUser(form.value.FirstName, form.value.LastName, form.value.Age, form.value.Email, form.value.UsrPwd, form.value.UsrRole);
+    this.router.navigate(["/login"]);
 }
 }
