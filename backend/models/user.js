@@ -1,5 +1,5 @@
 const sequelize = require('sequelize');
-
+//test comment
 const con = new sequelize("wshgroup","root","Psiog@123",{host:"127.0.0.1", dialect: "mysql"});
 
 const userSchema = con.define(
