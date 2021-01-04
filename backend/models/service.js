@@ -1,6 +1,6 @@
 const sequelize = require("sequelize");
 
-const con = require("../app").con;
+const con = require("./user").con;
 
 const serviceProviderSchema = con.define("serviceProvider", {
   UserID: { type: sequelize.INTEGER, required: true },
