@@ -5,4 +5,5 @@ export interface User {
   Email : string;
   UsrPwd : string;
   UsrRole : number;
+  IsActive : boolean;
 }

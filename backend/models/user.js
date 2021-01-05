@@ -11,6 +11,7 @@ const userSchema = con.define(
     Email : { type: sequelize.STRING, required : true},
     UsrPwd : { type: sequelize.STRING, required : true},
     UsrRole : { type: sequelize.INTEGER, required : true},
+    IsActive : { type: sequelize.BOOLEAN }
 });
 userSchema.sync();
 

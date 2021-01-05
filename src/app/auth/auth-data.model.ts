@@ -5,6 +5,7 @@ export interface AuthData {
   Email : string;
   UsrPwd : string;
   UsrRole : number;
+  IsActive : boolean;
 }
 
 export interface LoginData {

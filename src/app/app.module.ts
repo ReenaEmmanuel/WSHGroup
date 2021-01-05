@@ -16,12 +16,15 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSelectModule } from "@angular/material/select";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatSortModule } from '@angular/material/sort';
 
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { UserlistComponent } from './userlist/userlist.component';
+import { ServicelistComponent } from './servicelist/servicelist.component';
 
 
 
@@ -34,7 +37,8 @@ import { UserlistComponent } from './userlist/userlist.component';
     LoginComponent,
     SignupComponent,
     HomeComponent,
-    UserlistComponent
+    UserlistComponent,
+    ServicelistComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +55,9 @@ import { UserlistComponent } from './userlist/userlist.component';
     MatPaginatorModule,
     MatSelectModule,
     HttpClientModule,
-    MatTableModule
+    MatTableModule,
+    MatButtonToggleModule,
+    MatSortModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

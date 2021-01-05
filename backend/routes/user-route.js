@@ -18,7 +18,8 @@ router.post("/signup", (req, res, next) => {
     Age : req.body.Age,
     Email: req.body.Email,
     UsrPwd: hash,
-    UsrRole: req.body.UsrRole
+    UsrRole: req.body.UsrRole,
+    IsActive: req.body.IsActive
   }).then((newpost) => {
     res.status(201).json({
       message: 'User added successfully'
@@ -86,5 +87,29 @@ router.get("/getuserlist", function (req, res) {
       });
     });
 });
+
+//Update the IsActive state of User
+router.put("/setUserActiveStatus/:UserId", function (req, res) {
+  User.update(
+    { IsActive: false },
+    { where: { id: req.params.UserId, IsActive: true } }
+  )
+    .then((rowsUpdated) => {
+      if (rowsUpdated == 0) {
+        User.update(
+          { IsActive: true },
+          { where: { id: req.params.UserId, IsActive: false } }
+        );
+      }
+      res.json(rowsUpdated);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: "Error",
+      });
+    });
+});
+
 
 module.exports = router;

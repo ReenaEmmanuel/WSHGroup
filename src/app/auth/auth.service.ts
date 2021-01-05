@@ -38,7 +38,7 @@ export class AuthService {
   }
 
   createUser( FirstName: string, LastName: string, Age: number, Email: string, UsrPwd: string, UsrRole: number ) {
-    const authData: AuthData = { FirstName: FirstName, LastName: LastName, Age: Age, Email: Email, UsrPwd: UsrPwd, UsrRole: UsrRole };
+    const authData: AuthData = { FirstName: FirstName, LastName: LastName, Age: Age, Email: Email, UsrPwd: UsrPwd, UsrRole: UsrRole, IsActive: true };
     this.http
       .post("http://localhost:3000/user/signup", authData)
       .subscribe(response => {

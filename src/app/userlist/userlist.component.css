@@ -1,5 +1,18 @@
 table {
   width: 90%;
   margin: auto;
-  margin-top: 2%;
+}
+
+.mat-paginator {
+  width: 90%;
+  margin: auto;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 88%;
+  margin-top: 4%;
+  margin-left: 5%;
+  background-color: white;
+  padding: 1%;
 }
