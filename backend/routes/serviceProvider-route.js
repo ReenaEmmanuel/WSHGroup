@@ -1,20 +1,22 @@
 const express = require("express");
 
-const Service = require("../models/service")
-  .serviceSchema;
+const ServiceProvider = require("../models/service")
+  .serviceProviderSchema;
 
 const router = express.Router();
 
-//Create new Service
-router.post("/addNewService", (req, res) => {
-  Service.create({
-    PricePerHour: req.body.PricePerHour,
-    ServiceName: req.body.ServiceName,
+//Add new Service Provider
+router.post("/addNewSP", (req, res) => {
+  ServiceProvider.create({
+    UserID: req.body.UserID,
+    ServiceID: req.body.ServiceID,
+    Availability: req.body.Availability,
+    AverageRating: 0,
     IsActive: true
   })
     .then((newpost) => {
       res.status(201).json({
-        message: "Service added successfully",
+        message: "Service Provider added successfully",
       });
     })
     .catch((error) => {
@@ -25,17 +27,17 @@ router.post("/addNewService", (req, res) => {
     });
 });
 
-//Update the IsActive state of Service
-router.put("/setServiceActiveStatus/:ServiceId", function (req, res) {
-  Service.update(
+//Update the IsActive state of Service Provider
+router.put("/setSpActiveStatus/:SpId", function (req, res) {
+  ServiceProvider.update(
     { IsActive: false },
-    { where: { id: req.params.ServiceId, IsActive: true } }
+    { where: { id: req.params.SpId, IsActive: true } }
   )
     .then(function (rowsUpdated) {
       if (rowsUpdated == 0) {
         User.update(
           { IsActive: true },
-          { where: { id: req.params.ServiceId, IsActive: false } }
+          { where: { id: req.params.SpId, IsActive: false } }
         );
       }
       res.json(rowsUpdated);
@@ -48,14 +50,14 @@ router.put("/setServiceActiveStatus/:ServiceId", function (req, res) {
     });
 });
 
-//Delete Service
-router.put("/deleteService/:ServiceId", function (req, res) {
-  User.destroy(
-    { where: { id: req.params.ServiceId, IsActive: false } }
+//Delete Service Provider
+router.put("/deleteSp/:SpId", function (req, res) {
+  ServiceProvider.destroy(
+    { where: { id: req.params.SpId, IsActive: false } }
   )
     .then(function (rowsDeleted) {
       if (rowsDeleted == 1) {
-        console.log('Deleted successfully');
+        console.log('Service Provider deleted successfully');
       }
       res.json(rowsDeleted);
     })
@@ -68,11 +70,11 @@ router.put("/deleteService/:ServiceId", function (req, res) {
 });
 
 //Get Services List for Admin
-router.get("/getServiceList", function (req, res) {
-  User.findAll()
-    .then((servicesList) => {
-      res.json(servicesList);
-      return servicesList;
+router.get("/getSpList", function (req, res) {
+  ServiceProvider.findAll()
+    .then((spList) => {
+      res.json(spList);
+      return spList;
     })
     .catch((error) => {
       console.log(error);

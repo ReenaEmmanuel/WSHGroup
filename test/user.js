@@ -4,7 +4,7 @@ let chaiHttp = require("chai-http");
 
 chai.should();
 chai.use(chaiHttp);
-/*
+
 //Sign Up Testing
 describe("/POST new user", () => {
   it("it should POST a new user", (done) => {
@@ -52,4 +52,4 @@ describe("/POST Login user", () => {
       });
   });
 });
-*/
+
