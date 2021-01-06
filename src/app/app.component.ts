@@ -8,14 +8,12 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent {
 
-  @HostListener("window:onbeforeunload",["$event"])
-    clearLocalStorage(event){
-        localStorage.clear();
-    }
+
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
     this.authService.autoAuthUser();
-  }
+
+}
 }

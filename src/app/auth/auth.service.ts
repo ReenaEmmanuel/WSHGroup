@@ -107,22 +107,22 @@ export class AuthService {
   }
 
   private saveAuthData(token: string, expirationDate: Date, UserId: string, UsrRole: number) {
-    localStorage.setItem("token", token);
-    localStorage.setItem("expiration", expirationDate.toISOString());
-    localStorage.setItem("UserID",UserId);
-    localStorage.setItem("UsrRole", JSON.stringify(UsrRole));
+    sessionStorage.setItem("token", token);
+    sessionStorage.setItem("expiration", expirationDate.toISOString());
+    sessionStorage.setItem("UserID",UserId);
+    sessionStorage.setItem("UsrRole", JSON.stringify(UsrRole));
   }
 
   private clearAuthData() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("expiration");
-    localStorage.removeItem("UserID");
-    localStorage.removeItem("UsrRole");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("expiration");
+    sessionStorage.removeItem("UserID");
+    sessionStorage.removeItem("UsrRole");
   }
 
   private getAuthData() {
-    const token = localStorage.getItem("token");
-    const expirationDate = localStorage.getItem("expiration");
+    const token = sessionStorage.getItem("token");
+    const expirationDate = sessionStorage.getItem("expiration");
     if (!token || !expirationDate) {
       return;
     }
