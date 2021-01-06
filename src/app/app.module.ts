@@ -23,8 +23,10 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
-import { UserlistComponent } from './userlist/userlist.component';
-import { ServicelistComponent } from './servicelist/servicelist.component';
+import { UserlistComponent } from './users/userlist/userlist.component';
+import { ServicelistComponent } from './service/servicelist/servicelist.component';
+import { AddnewserviceComponent } from './service/addnewservice/addnewservice.component';
+import { ServiceproviderComponent } from './users/serviceprovider/serviceprovider.component';
 
 
 
@@ -38,7 +40,9 @@ import { ServicelistComponent } from './servicelist/servicelist.component';
     SignupComponent,
     HomeComponent,
     UserlistComponent,
-    ServicelistComponent
+    ServicelistComponent,
+    AddnewserviceComponent,
+    ServiceproviderComponent
   ],
   imports: [
     BrowserModule,

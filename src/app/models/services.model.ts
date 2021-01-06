@@ -1,5 +1,5 @@
 export interface Services {
-  ServiceID: string;
   ServiceName: string;
-  IsActive: string;
+  PricePerHour: number;
+  IsActive: boolean;
 }

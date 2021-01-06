@@ -19,6 +19,5 @@ export class LoginComponent {
     }
     this.isLoading = true;
     this.authService.login(form.value.Email, form.value.UsrPwd);
-    this.router.navigate(["/"]);
   }
 }

@@ -12,6 +12,10 @@ export class UserListService {
     return this.http.get<User[]>("http://localhost:3000/user/getuserlist");
   }
 
+  getServiceProviderList() {
+    return this.http.get<User[]>("http://localhost:3000/user/getServiceProviderList");
+  }
+
   deactivateUser(UserId: string) {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };
     return this.http.put<any>("http://localhost:3000/user/setUserActiveStatus/"+UserId,httpOptions);

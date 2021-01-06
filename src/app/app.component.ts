@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { AuthService } from './auth/auth.service';
 
 @Component({
@@ -7,6 +7,12 @@ import { AuthService } from './auth/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  @HostListener("window:onbeforeunload",["$event"])
+    clearLocalStorage(event){
+        localStorage.clear();
+    }
+
   constructor(private authService: AuthService) {}
 
   ngOnInit() {

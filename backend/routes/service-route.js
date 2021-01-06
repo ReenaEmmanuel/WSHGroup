@@ -33,7 +33,7 @@ router.put("/setServiceActiveStatus/:ServiceId", function (req, res) {
   )
     .then(function (rowsUpdated) {
       if (rowsUpdated == 0) {
-        User.update(
+        Service.update(
           { IsActive: true },
           { where: { id: req.params.ServiceId, IsActive: false } }
         );
@@ -50,7 +50,7 @@ router.put("/setServiceActiveStatus/:ServiceId", function (req, res) {
 
 //Delete Service
 router.put("/deleteService/:ServiceId", function (req, res) {
-  User.destroy(
+  Service.destroy(
     { where: { id: req.params.ServiceId, IsActive: false } }
   )
     .then(function (rowsDeleted) {
@@ -69,7 +69,7 @@ router.put("/deleteService/:ServiceId", function (req, res) {
 
 //Get Services List for Admin
 router.get("/getServiceList", function (req, res) {
-  User.findAll()
+  Service.findAll()
     .then((servicesList) => {
       res.json(servicesList);
       return servicesList;
@@ -83,4 +83,3 @@ router.get("/getServiceList", function (req, res) {
 });
 
 module.exports = router;
-

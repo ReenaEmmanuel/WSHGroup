@@ -1,0 +1,12 @@
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form (submit)="add(addNewServiceForm)" #addNewServiceForm="ngForm" *ngIf="!isLoading">
+    <mat-form-field>
+      <input matInput name="ServiceName" ngModel placeholder="Service Name" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input name="PricePerHour" ngModel matInput placeholder="Price Per Hour" required>
+    </mat-form-field>
+    <button mat-raised-button color="accent" type="submit" *ngIf="!isLoading">Add</button>
+  </form>
+</mat-card>

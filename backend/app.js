@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const app = express();
 
 const userRoutes = require("./routes/user-route");
+const serviceRoutes = require("./routes/service-route");
 
 /*mongoose.connect("mongodb://localhost:27017/demoDb")
 .then(() => {
@@ -34,24 +35,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.get("/api/sqlConnect", (req, res, next) => {
-//   AppUser.find( {
-//     Email: req.body.Email
-//   }).then(() => {
-//     res.status(300).json({
-//       message: 'Email ID already available in DB!'
-//     });
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//     res.status(500).json({
-//     message: "Error"
-//   });
-//   })
-// });
-
-
 
 app.use("/user",userRoutes);
+app.use("/service",serviceRoutes);
 
 module.exports = app;
