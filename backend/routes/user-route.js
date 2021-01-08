@@ -74,7 +74,7 @@ router.post("/login", (req, res, next) => {
 });
 
 //Get User List for Admin
-router.get("/getuserlist", function (req, res) {
+router.get("/getUserList", function (req, res) {
   User.findAll({ where: { UsrRole: 2 } })
     .then((userList) => {
       res.json(userList);
