@@ -82,11 +82,11 @@ const getPagination = (page, size) => {
 
 //Get User List for Admin
 router.get("/getUserList", function (req, res) {
-  //const { page, size } = req.query;
+  //const { page, size, usrRole } = req.query;
   const { limit, offset } = getPagination(1, 2); //(page, size);
 
   User.findAndCountAll({
-    where: { UsrRole: 2 },
+    where: { UsrRole: 2 }, //usrRole
     limit: limit,
     offset: offset,
   })
