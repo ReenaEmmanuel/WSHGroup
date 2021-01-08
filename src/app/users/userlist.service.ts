@@ -9,7 +9,7 @@ export class UserListService {
   constructor(private http: HttpClient) { }
 
   getUsersList() {
-    return this.http.get<User[]>("http://localhost:3000/user/getuserlist");
+    return this.http.get<User[]>("http://localhost:3000/user/getUserList");
   }
 
   getServiceProviderList() {

@@ -13,7 +13,7 @@ router.post("/signup", (req, res, next) => {
       Email: req.body.Email,
       UsrPwd: hash,
       UsrRole: req.body.UsrRole,
-      IsActive: req.body.IsActive
+      IsActive: req.body.IsActive,
     })
       .then((newpost) => {
         res.status(201).json({
@@ -73,9 +73,23 @@ router.post("/login", (req, res, next) => {
     });
 });
 
+//Common API to calculate Pagination
+const getPagination = (page, size) => {
+  const limit = size ? +size : 3;
+  const offset = page ? page * limit : 0;
+  return { limit, offset };
+};
+
 //Get User List for Admin
 router.get("/getUserList", function (req, res) {
-  User.findAll({ where: { UsrRole: 2 } })
+  //const { page, size } = req.query;
+  const { limit, offset } = getPagination(1, 2); //(page, size);
+
+  User.findAndCountAll({
+    where: { UsrRole: 2 },
+    limit: limit,
+    offset: offset,
+  })
     .then((userList) => {
       res.json(userList);
       return userList;
@@ -124,6 +138,5 @@ router.put("/setUserActiveStatus/:UserId", function (req, res) {
       });
     });
 });
-
 
 module.exports = router;
