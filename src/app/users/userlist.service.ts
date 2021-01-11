@@ -8,8 +8,9 @@ export class UserListService {
 
   constructor(private http: HttpClient) { }
 
-  getUsersList() {
-    return this.http.get<User[]>("http://localhost:3000/user/getUserList");
+  getUsersList(usersPerPage: number, currentPage: number) {
+    const queryParams = `?pagesize=${usersPerPage}&page=${currentPage}`;
+    return this.http.get<{message: string; users:any; count: number}>("http://localhost:3000/user/getUserList"+ queryParams);
   }
 
   getServiceProviderList() {

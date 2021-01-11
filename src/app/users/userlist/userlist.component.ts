@@ -3,7 +3,7 @@ import { User } from '../../models/user.model';
 import { UserListService } from '../userlist.service';
 import { MatTableDataSource } from '@angular/material/table';
 import {DataSource} from '@angular/cdk/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
 @Component({
@@ -12,11 +12,14 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./userlist.component.css']
 })
 
-export class UserlistComponent implements AfterViewInit  {
+export class UserlistComponent implements OnInit  {
 
   displayedColumns: string[] = ['id', 'FirstName', 'LastName', 'Email', 'Age', 'IsActive', 'Deactivate'];
   dataSource!: MatTableDataSource<User>;
   user : User[] = [];
+  totalUsers = 10;
+  usersPerPage = 5;
+  currentPage = 1;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -25,18 +28,17 @@ export class UserlistComponent implements AfterViewInit  {
 
    }
 
-   ngAfterViewInit(){
-    this.dataservice.getUsersList()
-      .subscribe(res => {
-        this.user= res;
-        // console.log(this.user);
-        console.log(this.user);
-        this.dataSource = new MatTableDataSource(this.user);
-        console.log(this.dataSource);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      });
-  }
+   ngOnInit() {
+    this.dataservice.getUsersList(this.usersPerPage,this.currentPage)
+    .subscribe(res​​​​​ => {
+      console.log(res);
+      this.user = res.users;
+      this.totalUsers = res.count;
+      this.dataSource = new MatTableDataSource(this.user);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -56,4 +58,17 @@ export class UserlistComponent implements AfterViewInit  {
         });
       }
 
+      onChangedPage(pageData: PageEvent) {
+        this.currentPage = pageData.pageIndex +1;
+        this.usersPerPage = pageData.pageSize;
+        this.dataservice.getUsersList(this.usersPerPage,this.currentPage)
+        .subscribe(res​​​​​ => {
+          this.user = res.users;
+          this.totalUsers = res.count;
+          console.log(this.dataSource);
+          this.dataSource = new MatTableDataSource(this.user);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        });
+      }
 }

@@ -73,26 +73,29 @@ router.post("/login", (req, res, next) => {
     });
 });
 
-//Common API to calculate Pagination
-const getPagination = (page, size) => {
-  const limit = size ? +size : 3;
-  const offset = page ? page * limit : 0;
-  return { limit, offset };
-};
+// //Common API to calculate Pagination
+// const getPagination = (page, size) => {
+//   const limit = size ? +size : 3;
+//   const offset = page ? page * limit : 0;
+//   return { limit, offset };
+// };
+
 
 //Get User List for Admin
 router.get("/getUserList", function (req, res) {
-  //const { page, size, usrRole } = req.query;
-  const { limit, offset } = getPagination(1, 2); //(page, size);
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  console.log(req.query);
 
   User.findAndCountAll({
     where: { UsrRole: 2 }, //usrRole
-    limit: limit,
-    offset: offset,
+     limit: pageSize,
+     offset: pageSize * (currentPage-1),
   })
-    .then((userList) => {
-      res.json(userList);
-      return userList;
+    .then((result) => {
+      res.status(200).json({ message: "Users extracted successfully",
+      users : result.rows,
+      count : result.count });
     })
     .catch((error) => {
       console.log(error);
