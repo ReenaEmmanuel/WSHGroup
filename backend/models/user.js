@@ -33,12 +33,11 @@ const serviceProviderSchema = con.define("serviceproviders", {
 });
 serviceProviderSchema.sync();
 
-userSchema.hasMany(serviceProviderSchema,{
-  foriegnKey: 'UserID'
-});
+userSchema.hasMany(serviceProviderSchema);
 serviceProviderSchema.belongsTo(userSchema);
-// serviceProviderSchema.hasMany(serviceSchema);
-// serviceSchema.belongsToMany(userSchema,{through: 'serviceProviderSchema'});
+
+serviceProviderSchema.hasMany(serviceSchema);
+//serviceSchema.belongsToMany(userSchema,{through: 'serviceProviderSchema'});
 
 module.exports = {
   userSchema: userSchema,

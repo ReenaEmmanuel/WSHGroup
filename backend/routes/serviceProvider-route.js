@@ -31,20 +31,23 @@ router.get("/getSpList", function (req, res) {
     where: { UsrRole: 1 },
     //limit: pageSize,
     //offset: pageSize * (currentPage - 1),
-    include: [
-      {
-        association: "appusers",
-        attributes: ["FirstName", "LastName", "Age", "Email"],
-      },
-      {
-        association: "serviceproviders",
-        attributes: ["UserID", "ServiceID"],
-      },
-      // {
-      //   association: "services",
-      //   attributes: ["id", "ServiceName", "PricePerHour"],
-      // }
-    ],
+    include : {
+      model: serviceProvider,
+    }
+    // include: [
+    //   {
+    //     association: "appusers",
+    //     attributes: ["FirstName", "LastName", "Age", "Email"],
+    //   },
+    //   {
+    //     association: "serviceproviders",
+    //     attributes: ["UserID", "ServiceID"],
+    //   },
+    //   // {
+    //   //   association: "services",
+    //   //   attributes: ["id", "ServiceName", "PricePerHour"],
+    //   // }
+    // ],
   })
     .then((result) => {
       res
