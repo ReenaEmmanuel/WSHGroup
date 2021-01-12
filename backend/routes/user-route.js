@@ -73,14 +73,6 @@ router.post("/login", (req, res, next) => {
     });
 });
 
-// //Common API to calculate Pagination
-// const getPagination = (page, size) => {
-//   const limit = size ? +size : 3;
-//   const offset = page ? page * limit : 0;
-//   return { limit, offset };
-// };
-
-
 //Get User List for Admin
 router.get("/getUserList", function (req, res) {
   const pageSize = +req.query.pagesize;
@@ -88,7 +80,7 @@ router.get("/getUserList", function (req, res) {
   console.log(req.query);
 
   User.findAndCountAll({
-    where: { UsrRole: 2 }, //usrRole
+    where: { UsrRole: 2 },
      limit: pageSize,
      offset: pageSize * (currentPage-1),
   })
