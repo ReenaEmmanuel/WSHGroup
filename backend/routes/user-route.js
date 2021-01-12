@@ -106,10 +106,19 @@ router.get("/getUserList", function (req, res) {
 });
 
 router.get("/getServiceProviderList", function (req, res) {
-  User.findAll({ where: { UsrRole: 1 } })
-    .then((userList) => {
-      res.json(userList);
-      return userList;
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  console.log(req.query);
+
+  User.findAndCountAll({
+    where: { UsrRole: 1 }, //usrRole
+     limit: pageSize,
+     offset: pageSize * (currentPage-1),
+  })
+    .then((result) => {
+      res.status(200).json({ message: "Service Providers extracted successfully",
+      users : result.rows,
+      count : result.count });
     })
     .catch((error) => {
       console.log(error);
