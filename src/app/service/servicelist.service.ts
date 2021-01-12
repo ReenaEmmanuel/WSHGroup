@@ -8,8 +8,9 @@ export class ServicesListService {
 
   constructor(private http: HttpClient) { }
 
-  getServicesList() {
-    return this.http.get<Services[]>("http://localhost:3000/service/getServiceList");
+  getServicesList(servicesPerPage: number, currentPage: number) {
+    const queryParams = `?pagesize=${servicesPerPage}&page=${currentPage}`;
+    return this.http.get<{message: string; services:any; count: number}>("http://localhost:3000/service/getServiceList"+ queryParams);
   }
 
   deactivateService(ServiceId: string) {

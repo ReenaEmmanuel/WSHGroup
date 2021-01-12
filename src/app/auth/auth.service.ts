@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { AuthData, LoginData } from "./auth-data.model";
 import { Subject } from "rxjs";
 import { Router } from "@angular/router";
+import { environment } from "../../environments/environment"
 
 @Injectable({ providedIn : "root" })
 
@@ -14,6 +15,7 @@ export class AuthService {
   private tokenTimer : any;
   private UserId: any;
   private UsrRole: any;
+  apiUrl = environment.apiUrl;
 
   constructor( private http:HttpClient, private router: Router) {}
 
