@@ -108,6 +108,9 @@ router.get("/getServiceProviderList", function (req, res) {
     User.findAndCountAll({
      include : {
         model: serviceProvider,
+        where: {
+          appuserId : Sequelize.col('appusers.id')
+        }
       }
   })
     .then((result) => {

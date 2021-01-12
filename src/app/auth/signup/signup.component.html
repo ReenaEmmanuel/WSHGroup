@@ -18,16 +18,16 @@
       <input type="password" name="UsrPwd" ngModel matInput placeholder="Password" #passwordInput="ngModel" required>
       <mat-error *ngIf="passwordInput.invalid">Please enter a valid password.</mat-error>
     </mat-form-field>
-    <!-- <mat-form-field>
+    <mat-form-field>
       <input matInput type="number" name="UsrRole" ngModel matInput placeholder="Role" required>
-    </mat-form-field> -->
-    <mat-form-field appearance="fill" name="UsrRole" ngModel>
+    </mat-form-field>
+    <!-- <mat-form-field appearance="fill" name="UsrRole" ngModel required>
       <mat-label>Select me</mat-label>
       <mat-select>
-        <mat-option value="Service Provider">Service Provider</mat-option>
-        <mat-option value="Customer">Customer</mat-option>
+        <mat-option value=1>Service Provider</mat-option>
+        <mat-option value=2>Customer</mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field> -->
     <button mat-raised-button color="accent" type="submit" *ngIf="!isLoading">Signup</button>
   </form>
 </mat-card>

@@ -20,14 +20,7 @@ export class SignupComponent {
     }
     this.isLoading = true;
 
-    if(form.value.UsrRole == "Service Provider"){
-      this.UsrRole = 1;
-    }
-    else{
-      this.UsrRole = 2;
-    }
-
-    this.authService.createUser(form.value.FirstName, form.value.LastName, form.value.Age, form.value.Email, form.value.UsrPwd, this.UsrRole);
+    this.authService.createUser(form.value.FirstName, form.value.LastName, form.value.Age, form.value.Email, form.value.UsrPwd, form.value.UsrRole);
 
     this.router.navigate(["/login"]);
 }

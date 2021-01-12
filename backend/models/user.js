@@ -56,9 +56,8 @@ const serviceProviderSchema = con.define("serviceproviders", {
 serviceProviderSchema.sync();
 
 userSchema.hasMany(serviceProviderSchema);
-serviceProviderSchema.belongsTo(userSchema);
-
-serviceProviderSchema.hasMany(serviceSchema);
+// serviceProviderSchema.belongsTo(userSchema);
+serviceSchema.hasOne(serviceProviderSchema);
 //serviceSchema.belongsToMany(userSchema,{through: 'serviceProviderSchema'});
 
 module.exports = {

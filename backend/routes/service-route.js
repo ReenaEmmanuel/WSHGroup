@@ -100,7 +100,7 @@ router.get("/getServiceList", function (req, res) {
     .catch((error) => {
       console.log(error);
       res.status(500).json({
-        message: "Error",
+        message: error,
       });
     });
 });
