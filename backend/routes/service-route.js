@@ -68,11 +68,34 @@ router.put("/deleteService/:ServiceId", function (req, res) {
 });
 
 //Get Services List for Admin
+// router.get("/getServiceList", function (req, res) {
+//   Service.findAll()
+//     .then((servicesList) => {
+//       res.json(servicesList);
+//       return servicesList;
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//       res.status(500).json({
+//         message: "Error",
+//       });
+//     });
+// });
+
+//Get Services List for Admin
 router.get("/getServiceList", function (req, res) {
-  Service.findAll()
-    .then((servicesList) => {
-      res.json(servicesList);
-      return servicesList;
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  console.log(req.query);
+
+  Service.findAndCountAll({
+     limit: pageSize,
+     offset: pageSize * (currentPage-1),
+  })
+    .then((result) => {
+      res.status(200).json({ message: "Services extracted successfully",
+      services : result.rows,
+      count : result.count });
     })
     .catch((error) => {
       console.log(error);
