@@ -19,7 +19,7 @@ export class ServicelistComponent implements OnInit  {
   dataSource!: MatTableDataSource<Services>;
   service : Services[] = [];
   totalServices = 10;
-  servicesPerPage = 2;
+  servicesPerPage = 5;
   currentPage = 1;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

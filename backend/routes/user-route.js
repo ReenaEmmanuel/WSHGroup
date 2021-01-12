@@ -2,7 +2,9 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user").userSchema;
+const serviceProvider = require("../models/user").serviceProviderSchema;
 const router = express.Router();
+const Sequelize = require('sequelize');
 
 router.post("/signup", (req, res, next) => {
   bcrypt.hash(req.body.UsrPwd, 10).then((hash) =>
@@ -106,14 +108,15 @@ router.get("/getUserList", function (req, res) {
 });
 
 router.get("/getServiceProviderList", function (req, res) {
-  const pageSize = +req.query.pagesize;
-  const currentPage = +req.query.page;
-  console.log(req.query);
-
-  User.findAndCountAll({
-    where: { UsrRole: 1 }, //usrRole
-     limit: pageSize,
-     offset: pageSize * (currentPage-1),
+  // const pageSize = +req.query.pagesize;
+  // const currentPage = +req.query.page;
+  // console.log(req.query);
+    //  limit: pageSize,
+    //  offset: pageSize * (currentPage-1),
+    User.findAndCountAll({
+     include : {
+        model: serviceProvider,
+      }
   })
     .then((result) => {
       res.status(200).json({ message: "Service Providers extracted successfully",
@@ -123,7 +126,7 @@ router.get("/getServiceProviderList", function (req, res) {
     .catch((error) => {
       console.log(error);
       res.status(500).json({
-        message: "Error",
+        message: error,
       });
     });
 });
