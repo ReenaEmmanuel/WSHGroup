@@ -1,7 +1,6 @@
 const express = require("express");
 
-const Service = require("../models/user")
-  .serviceSchema;
+const Service = require("../models/dbSchema").serviceSchema;
 
 const router = express.Router();
 

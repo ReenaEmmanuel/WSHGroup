@@ -18,8 +18,6 @@ const serviceProviderRoutes = require("./routes/serviceProvider-route");
 
 const Post = require('./models/post').Post;*/
 
-const AppUser = require('./models/user').userSchema;
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

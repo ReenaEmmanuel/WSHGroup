@@ -1,10 +1,9 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const User = require("../models/user").userSchema;
-const serviceProvider = require("../models/user").serviceProviderSchema;
+const User = require("../models/dbSchema").userSchema;
 const router = express.Router();
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 
 router.post("/signup", (req, res, next) => {
   bcrypt.hash(req.body.UsrPwd, 10).then((hash) =>
@@ -83,40 +82,15 @@ router.get("/getUserList", function (req, res) {
 
   User.findAndCountAll({
     where: { UsrRole: 2 },
-     limit: pageSize,
-     offset: pageSize * (currentPage-1),
+    limit: pageSize,
+    offset: pageSize * (currentPage - 1),
   })
     .then((result) => {
-      res.status(200).json({ message: "Users extracted successfully",
-      users : result.rows,
-      count : result.count });
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).json({
-        message: "Error",
+      res.status(200).json({
+        message: "Users extracted successfully",
+        users: result.rows,
+        count: result.count,
       });
-    });
-});
-
-router.get("/getServiceProviderList", function (req, res) {
-  // const pageSize = +req.query.pagesize;
-  // const currentPage = +req.query.page;
-  // console.log(req.query);
-    //  limit: pageSize,
-    //  offset: pageSize * (currentPage-1),
-    User.findAndCountAll({
-     include : {
-        model: serviceProvider,
-        where: {
-          appuserId : Sequelize.col('appusers.id')
-        }
-      }
-  })
-    .then((result) => {
-      res.status(200).json({ message: "Service Providers extracted successfully",
-      users : result.rows,
-      count : result.count });
     })
     .catch((error) => {
       console.log(error);
