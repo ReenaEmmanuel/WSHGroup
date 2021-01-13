@@ -72,8 +72,8 @@ export class ServicelistComponent implements OnInit  {
         this.totalServices = res.count;
         this.dataSource = new MatTableDataSource(res.services);
         console.log(this.dataSource);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        // this.dataSource.paginator = this.paginator;
+        // this.dataSource.sort = this.sort;
       });
       }
 

@@ -17,3 +17,8 @@ table {
   padding: 1%;
 }
 
+.add {
+  position: relative;
+  margin-left: 45%;
+  margin-top: 2%;
+}

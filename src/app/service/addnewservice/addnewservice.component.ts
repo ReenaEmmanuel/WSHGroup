@@ -21,6 +21,6 @@ export class AddnewserviceComponent{
     this.isLoading = true;
     this.dataService.createService(form.value.ServiceName, form.value.PricePerHour);
 
-    this.router.navigate(["/"]);
+    this.router.navigate(["/servicelist"]);
   }
 }

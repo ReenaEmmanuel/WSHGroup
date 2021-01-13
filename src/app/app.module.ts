@@ -27,6 +27,7 @@ import { UserlistComponent } from './users/userlist/userlist.component';
 import { ServicelistComponent } from './service/servicelist/servicelist.component';
 import { AddnewserviceComponent } from './service/addnewservice/addnewservice.component';
 import { ServiceproviderComponent } from './users/serviceprovider/serviceprovider.component';
+import { UserHomePageComponent } from './user-home-page/user-home-page.component';
 
 
 
@@ -42,7 +43,8 @@ import { ServiceproviderComponent } from './users/serviceprovider/serviceprovide
     UserlistComponent,
     ServicelistComponent,
     AddnewserviceComponent,
-    ServiceproviderComponent
+    ServiceproviderComponent,
+    UserHomePageComponent
   ],
   imports: [
     BrowserModule,

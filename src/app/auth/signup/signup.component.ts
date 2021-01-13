@@ -12,6 +12,8 @@ import { AuthService } from "../auth.service";
 export class SignupComponent {
   isLoading = false;
   UsrRole = 0;
+
+
   constructor(public authService: AuthService, private router: Router) {}
 
   onSignup(form: NgForm) {
