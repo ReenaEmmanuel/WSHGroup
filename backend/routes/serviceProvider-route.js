@@ -50,15 +50,15 @@ router.get("/getServiceProviderList", function (req, res) {
         attributes: [
           "ServiceProviderID",
           "Rating",
-          // [
-          //   Rating.sequelize.fn("AVG", models.sequelize.col("ratings.Rating")),
-          //   "ratingAvg",
-          // ],
+          [
+            Rating.sequelize.fn("AVG", Rating.sequelize.col("ratings.Rating")),
+            "ratingAvg",
+          ],
         ],
         group: ["ServiceProviderID"],
-        // order: [
-        //   [models.sequelize.fn("AVG", models.sequelize.col("Rating")), "DESC"],
-        //],
+        order: [
+          [Rating.sequelize.fn("AVG", Rating.sequelize.col("Rating")), "DESC"],
+        ],
       },
     ],
   })
