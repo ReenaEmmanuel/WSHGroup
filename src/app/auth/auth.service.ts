@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { AuthData, LoginData } from "./auth-data.model";
 import { Subject } from "rxjs";
 import { Router } from "@angular/router";
-import { environment } from "../../environments/environment"
+import { environment } from "../../environments/environment";
 
 @Injectable({ providedIn : "root" })
 
@@ -15,7 +15,7 @@ export class AuthService {
   private tokenTimer : any;
   private UserId: any;
   private UsrRole: any;
-  apiUrl = environment.apiUrl;
+  url = environment.apiUrl + "user/";
 
   constructor( private http:HttpClient, private router: Router) {}
 
@@ -42,7 +42,7 @@ export class AuthService {
   createUser( FirstName: string, LastName: string, Age: number, Email: string, UsrPwd: string, UsrRole: number ) {
     const authData: AuthData = { FirstName: FirstName, LastName: LastName, Age: Age, Email: Email, UsrPwd: UsrPwd, UsrRole: UsrRole, IsActive: true };
     this.http
-      .post("http://localhost:3000/user/signup", authData)
+      .post(this.url+"signup", authData)
       .subscribe(response => {
         console.log(response);
       });
@@ -51,7 +51,7 @@ export class AuthService {
   login(Email: string, UsrPwd: string) {
     const authData: LoginData = { Email: Email, UsrPwd: UsrPwd };
     this.http.post<{ token: string; expiresIn: number, UserId: string, UsrRole: number }>(
-        "http://localhost:3000/user/login",
+        this.url+"login",
         authData
       )
       .subscribe(response => {

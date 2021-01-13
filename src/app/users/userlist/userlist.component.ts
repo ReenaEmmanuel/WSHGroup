@@ -67,8 +67,8 @@ export class UserlistComponent implements OnInit  {
           this.totalUsers = res.count;
           console.log(this.dataSource);
           this.dataSource = new MatTableDataSource(this.user);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
+          // this.dataSource.paginator = this.paginator;
+          // this.dataSource.sort = this.sort;
         });
       }
 }
