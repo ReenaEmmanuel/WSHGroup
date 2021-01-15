@@ -126,7 +126,7 @@ export class AuthService {
     const token = sessionStorage.getItem("token");
     const expirationDate = sessionStorage.getItem("expiration");
     if (!token || !expirationDate) {
-      return;
+      return null;
     }
     return {
       token: token,

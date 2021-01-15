@@ -21,12 +21,20 @@ export class ServicesListService {
     return this.http.put<any>(this.url+"setServiceActiveStatus/"+ServiceId,httpOptions);
   }
 
-  createService( ServiceName: string, PricePerHour: number ) {
-    const serviceData: Services = { ServiceName: ServiceName, PricePerHour: PricePerHour, IsActive: true };
+  createService( ServiceName: string, PricePerHour: number, image: File) {
+    const data = new FormData();
+    data.append("ServiceName",ServiceName);
+    data.append("PricePerHour",PricePerHour.toString());
+    data.append("image",image, ServiceName);
+
+    // const serviceData: Services = { ServiceName: ServiceName, PricePerHour: PricePerHour, image: image, IsActive: true };
     this.http
-      .post(this.url+"addNewService", serviceData)
+      .post(this.url+"addNewService", data)
       .subscribe(response => {
         console.log(response);
+      },
+      error => {
+        console.log(error);
       });
   }
 }

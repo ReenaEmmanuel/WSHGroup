@@ -19,6 +19,7 @@ const serviceSchema = con.define("services", {
   ServiceName: { type: sequelize.STRING, required: true },
   PricePerHour: { type: sequelize.DECIMAL(10, 2), required: true },
   IsActive: { type: sequelize.BOOLEAN, defaultValue: true },
+  image: { type: sequelize.STRING }
 });
 serviceSchema.sync();
 
