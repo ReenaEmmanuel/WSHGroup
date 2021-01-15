@@ -34,7 +34,7 @@ serviceProviderSchema.sync();
 
 const ratingSchema = con.define("ratings", {
   ServiceProviderID: { type: sequelize.INTEGER },
-  Rating: { type: sequelize.INTEGER },
+  Rating: { type: sequelize.INTEGER, defaultValue: 0 },
   Comments: { type: sequelize.STRING },
 });
 ratingSchema.sync();
