@@ -9,6 +9,9 @@ import { HomeComponent } from './home/home.component';
 import { ServicelistComponent } from './service/servicelist/servicelist.component';
 import { UserlistComponent } from './users/userlist/userlist.component';
 import { ServiceproviderComponent } from './users/serviceprovider/serviceprovider.component';
+import { UserHomePageComponent } from './customer-portal/user-home-page/user-home-page.component';
+import { AppointmentBookingComponent } from './customer-portal/appointment-booking/appointment-booking.component';
+import { AddNewAddressComponent } from './customer-portal/add-new-address/add-new-address.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent, canActivate: [AuthGuard] },
@@ -19,6 +22,9 @@ const routes: Routes = [
   { path: "serviceproviderlist", component : ServiceproviderComponent, canActivate: [AuthGuard]  },
   { path: "servicelist", component : ServicelistComponent, canActivate: [AuthGuard]  },
   { path: "addnewservice", component : AddnewserviceComponent, canActivate: [AuthGuard]  },
+  { path: "userhomepage", component: UserHomePageComponent, canActivate: [AuthGuard] },
+  { path: "appointmentbooking", component: AppointmentBookingComponent, canActivate: [AuthGuard] },
+  { path: "newaddress", component: AddNewAddressComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

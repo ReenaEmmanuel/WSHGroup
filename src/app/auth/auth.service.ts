@@ -68,6 +68,9 @@ export class AuthService {
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
           console.log(expirationDate);
           this.saveAuthData(token, expirationDate, this.UserId, this.UsrRole);
+          if(this.UsrRole==2)
+          this.router.navigate(["/userhomepage"]);
+          else
           this.router.navigate(["/"]);
         }
       });
