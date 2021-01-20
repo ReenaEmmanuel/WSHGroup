@@ -1,7 +1,7 @@
 import { any } from "sequelize/types/lib/operators"
 
 export interface Appointments {
-AppUserID: number;
+  UserID: number;
   ServiceProviderID: number;
   AppointmentDate: any;
   StartTime: any;

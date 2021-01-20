@@ -16,9 +16,12 @@ export class AppointmentBookingComponent implements OnInit {
   // isLoading = false;
   form: any;
   serviceID : any;
+  date : any;
   appointmentDate : any;
   serviceProviderID : any;
-
+  selectedDate : Date;
+  selectedServiceID : number;
+  userid : any;
   constructor(private formBuilder: FormBuilder,private dataservice: ServicesListService, private service: customerPortalService) {
 
   }
@@ -29,15 +32,18 @@ export class AppointmentBookingComponent implements OnInit {
         this.services = res.services;
       });
 
-      this.form = this.formBuilder.group({
-        ServiceName: [null, Validators.required],
-        appointmentDate : ["", Validators.required],
-        ServiceProvider : ["", Validators.required]
-        })
+      this.form = new FormGroup({
+        'ServiceID': new FormControl(null, Validators.required),
+        'ServiceProviderID': new FormControl(null, Validators.required),
+        'AppointmentDate': new FormControl(null, Validators.required),
+      });
+
+      this.userid = sessionStorage.getItem("UserID");
   }
 
   onServiceSelection(serviceId: any) {
     console.log(serviceId);
+    this.selectedServiceID = serviceId;
     this.service.getServicesProviderListForEachService(serviceId)
       .subscribe( res => {
         this.serviceProviders = res.users;
@@ -48,5 +54,14 @@ export class AppointmentBookingComponent implements OnInit {
   onServiceProviderSelection(serviceProviderId : any)
   {
     console.log(serviceProviderId);
+  }
+
+  inputEvent(event : any){
+    console.log(event.value);
+  }
+
+  onSubmit(){
+    console.log(this.form);
+    this.service.createAppointment(+this.userid,this.form.value.ServiceProviderID, this.form.value.AppointmentDate);
   }
 }

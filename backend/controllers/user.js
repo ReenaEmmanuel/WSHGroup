@@ -1,6 +1,7 @@
 const User = require("../models/dbSchema").userSchema;
 const Appointment = require("../models/dbSchema").appointmentSchema;
-const Address = require("../models/dbSchema").AddressSchema;
+const Address = require("../models/dbSchema").addressSchema;
+const Service = require("../models/dbSchema").serviceSchema;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const ServiceProvider = require("../models/dbSchema").serviceProviderSchema;
@@ -249,9 +250,10 @@ exports.updateAddress = (req, res) => {
 };
 
 exports.getSpList = function (req, res) {
-  const serviceId = +req.query.ServiceID;
+  const serviceId = +req.params.id;
+  // const appointmentDate = +req.params.date;
   User.findAll({
-    attributes: ["FirstName", "LastName"],
+    attributes: ["id","FirstName", "LastName"],
     include: [
       {
         model: ServiceProvider,
@@ -260,17 +262,28 @@ exports.getSpList = function (req, res) {
         where: {
           ServiceID: serviceId,
         },
+        include : [
+          {
+            model: Service,
+            required: true,
+            attributes: ["PricePerHour"],
+            // where: {
+            //    ServiceID: serviceId,
+            // },
+          },
+        ]
       },
       {
         model: Appointment,
         attributes: ["AppointmentDate"],
-        //where: {AppointmentDate:{[Op.ne]: '2021-01-20'} }
+        // where: {AppointmentDate: {[Op.ne]: appointmentDate}}
+          // {[Op.ne]: '2021-01-20'} }
       },
     ],
   })
     .then((result) => {
       res.status(200).json({
-        message: "Service providers extracted successfully",
+        message: "Service Providers extracted successfully",
         users: result,
       });
     })
