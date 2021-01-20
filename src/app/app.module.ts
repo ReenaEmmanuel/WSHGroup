@@ -16,8 +16,9 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSelectModule } from "@angular/material/select";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSortModule } from '@angular/material/sort';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
@@ -27,10 +28,11 @@ import { UserlistComponent } from './users/userlist/userlist.component';
 import { ServicelistComponent } from './service/servicelist/servicelist.component';
 import { AddnewserviceComponent } from './service/addnewservice/addnewservice.component';
 import { ServiceproviderComponent } from './users/serviceprovider/serviceprovider.component';
-import { UserHomePageComponent } from './user-home-page/user-home-page.component';
-
-
-
+import { UserHomePageComponent } from './customer-portal/user-home-page/user-home-page.component';
+import { AppointmentBookingComponent } from './customer-portal/appointment-booking/appointment-booking.component';
+import { AddNewAddressComponent } from './customer-portal/add-new-address/add-new-address.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -44,7 +46,9 @@ import { UserHomePageComponent } from './user-home-page/user-home-page.component
     ServicelistComponent,
     AddnewserviceComponent,
     ServiceproviderComponent,
-    UserHomePageComponent
+    UserHomePageComponent,
+    AppointmentBookingComponent,
+    AddNewAddressComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +67,10 @@ import { UserHomePageComponent } from './user-home-page/user-home-page.component
     HttpClientModule,
     MatTableModule,
     MatButtonToggleModule,
-    MatSortModule
+    MatSortModule,
+    MatGridListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
