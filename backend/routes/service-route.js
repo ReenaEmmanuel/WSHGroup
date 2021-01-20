@@ -56,10 +56,10 @@ router.post("/addNewService",multer({ storage: storage }).single("image"), (req,
 router.put("/setServiceActiveStatus/:ServiceId", ServiceController.updateService);
 
 //Delete Service
-router.put("/deleteService/:ServiceId", );
+router.put("/deleteService/:ServiceId", ServiceController.deleteService );
 
 
 //Get Services List for Admin
-router.get("/getServiceList", );
+router.get("/getServiceList", ServiceController.getList);
 
 module.exports = router;

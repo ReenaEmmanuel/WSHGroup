@@ -3,6 +3,7 @@ const Appointment = require("../models/dbSchema").appointmentSchema;
 const Address = require("../models/dbSchema").AddressSchema;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const ServiceProvider = require("../models/dbSchema").serviceProviderSchema;
 
 exports.login = (req, res) => {
   let fetchedUser;
@@ -237,6 +238,40 @@ exports.updateAddress = (req, res) => {
     .then((newpost) => {
       res.status(201).json({
         message: "Address updated successfully",
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: error,
+      });
+    });
+};
+
+exports.getSpList = function (req, res) {
+  const serviceId = +req.query.ServiceID;
+  User.findAll({
+    attributes: ["FirstName", "LastName"],
+    include: [
+      {
+        model: ServiceProvider,
+        required: true,
+        attributes: ["ServiceID"],
+        where: {
+          ServiceID: serviceId,
+        },
+      },
+      {
+        model: Appointment,
+        attributes: ["AppointmentDate"],
+        //where: {AppointmentDate:{[Op.ne]: '2021-01-20'} }
+      },
+    ],
+  })
+    .then((result) => {
+      res.status(200).json({
+        message: "Service providers extracted successfully",
+        users: result,
       });
     })
     .catch((error) => {
