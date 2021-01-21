@@ -90,8 +90,8 @@ appointmentSchema.belongsTo(userSchema);
 serviceProviderSchema.hasMany(appointmentSchema);
 appointmentSchema.belongsTo(serviceProviderSchema);
 
-invoiceSchema.hasOne(appointmentSchema);
-appointmentSchema.belongsTo(invoiceSchema);
+appointmentSchema.hasOne(invoiceSchema);
+invoiceSchema.belongsTo(appointmentSchema);
 
 module.exports = {
   //con: con,

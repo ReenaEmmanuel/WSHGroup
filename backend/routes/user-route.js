@@ -15,6 +15,7 @@ router.put("/setUserActiveStatus/:UserId", UserController.setUserActiveStatus);
 //Create appointment
 router.post("/createAppointment", UserController.createAppointment);
 
+//Get Appointment list for a User
 router.get("/getAppointmentList/:AppUserID", UserController.getAppointmentList);
 
 //Update Appointment

@@ -175,9 +175,31 @@ exports.getAppointmentList = (req, res) => {
   const currentPage = +req.query.page;
   Appointment.findAndCountAll({
     where: { AppUserID: req.params.AppUserID },
+    attributes: [
+      "AppUserID",
+      "ServiceProviderID",
+      "AppointmentDate",
+      "Status",
+      "PaymentMode",
+      "TotalCost",
+      "IsPaid",
+    ],
     limit: pageSize,
     offset: pageSize * (currentPage - 1),
-    order: [Appointment.sequelize.col("AppointmentDate"), "DESC"],
+    //order: [Appointment.sequelize.col("AppointmentDate"), "DESC"],
+    include: {
+      model: ServiceProvider,
+      required: true,
+      attributes: ["AppUserID", "ServiceID"],
+      include: [
+        {
+          model: User,
+          required: true,
+          attributes: ["FirstName", "LastName"],
+        },
+        { model: Service, required: true, attributes: ["ServiceName"] },
+      ],
+    },
   })
     .then((result) => {
       res.status(200).json({
@@ -253,7 +275,7 @@ exports.getSpList = function (req, res) {
   const serviceId = +req.params.id;
   // const appointmentDate = +req.params.date;
   User.findAll({
-    attributes: ["id","FirstName", "LastName"],
+    attributes: ["id", "FirstName", "LastName"],
     include: [
       {
         model: ServiceProvider,
@@ -262,19 +284,19 @@ exports.getSpList = function (req, res) {
         where: {
           ServiceID: serviceId,
         },
-        include : [
+        include: [
           {
             model: Service,
             required: true,
             attributes: ["PricePerHour"],
           },
-        ]
+        ],
       },
       {
         model: Appointment,
         attributes: ["AppointmentDate"],
         // where: {AppointmentDate: {[Op.ne]: appointmentDate}}
-          // {[Op.ne]: '2021-01-20'} }
+        // {[Op.ne]: '2021-01-20'} }
       },
     ],
   })
