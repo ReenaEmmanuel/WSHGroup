@@ -10,13 +10,18 @@ import { Appointments } from "../models/appointment.model";
 export class customerPortalService {
 
   url = environment.apiUrl + "serviceProvider/";
-  userurl = environment.apiUrl + "user/"
+  userurl = environment.apiUrl + "user/";
+  serviceurl = environment.apiUrl + "service/";
 
   constructor(private http: HttpClient) { }
 
   getServicesProviderListForEachService(id: number) {
     // const dateString = date.toISOString();
     return this.http.get<{message: string; users:any}>( this.userurl + "getSpList/"+ id);
+  }
+
+  getPrice(id: number) {
+    return this.http.get<{message: string; PricePerHour:any}>( this.serviceurl + "getPrice/"+ id);
   }
 
   postAddress(userid: number, Door: number,Street1: string,Street2: string,Area: string,City: string, State: string,Pincode: number,Contact: number,AlternateContact:number) {
@@ -31,8 +36,8 @@ export class customerPortalService {
       });
   }
 
-  createAppointment(AppUserID: number, ServiceProviderID: number, AppointmentDate: any){
-    const appointment: Appointments = { UserID: AppUserID, ServiceProviderID: ServiceProviderID, AppointmentDate: AppointmentDate, StartTime: null, EndTime: null, Status: 1, PaymentMode: 1, TotalCost: null, IsPaid: 1 };
+  createAppointment(AppUserID: number, ServiceProviderID: number, AppointmentDate: any, totalCost : number){
+    const appointment: Appointments = { UserID: AppUserID, ServiceProviderID: ServiceProviderID, AppointmentDate: AppointmentDate, StartTime: null, EndTime: null, Status: 1, PaymentMode: 1, TotalCost: totalCost, IsPaid: 1 };
     this.http
     .post(this.userurl+"createAppointment", appointment)
     .subscribe(response => {

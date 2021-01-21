@@ -62,4 +62,6 @@ router.put("/deleteService/:ServiceId", ServiceController.deleteService );
 //Get Services List for Admin
 router.get("/getServiceList", ServiceController.getList);
 
+router.get("/getPrice/:id",ServiceController.getPricePerHour);
+
 module.exports = router;
