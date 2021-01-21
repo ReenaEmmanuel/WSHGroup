@@ -54,13 +54,14 @@ export class AppointmentBookingComponent implements OnInit {
         .subscribe( res => {
           this.serviceProviders = res.users;
           console.log(this.serviceProviders);
+          this.calculatePricePerHour();
         });
-      this.service.getPrice(serviceId)
-      .subscribe( res => {
-        console.log(res);
-        this.pricePerHour = res.PricePerHour;
-        console.log(this.pricePerHour);
-      });
+    }
+  }
+  calculatePricePerHour(){
+    if(this.serviceProviders){
+      this.pricePerHour = this.serviceProviders[0].serviceproviders[0].service.PricePerHour;
+      console.log(this.pricePerHour);
     }
   }
 
@@ -75,10 +76,6 @@ export class AppointmentBookingComponent implements OnInit {
   inputEvent(event : any){
     console.log(event.value);
   }
-
-  // onTimeChange(time : number){
-  //   this.totalPrice = time*this.pricePerHour;
-  // }
 
   onSubmit(){
     console.log(this.form);

@@ -47,4 +47,10 @@ export class customerPortalService {
       console.log(error);
     });
   }
+
+  getAppointmentList(appointmentsPerPage: number, currentPage: number, AppUserID: number) {
+    const queryParams = `?pagesize=${appointmentsPerPage}&page=${currentPage}`;
+    return this.http.get<{message: string; appointments:any; count: number}>(this.userurl+"getAppointmentList/" + AppUserID + queryParams);
+  }
+
 }

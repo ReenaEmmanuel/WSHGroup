@@ -182,7 +182,7 @@ exports.getAppointmentList = (req, res) => {
     .then((result) => {
       res.status(200).json({
         message: "Appointments extracted successfully",
-        users: result.rows,
+        appointments: result.rows,
         count: result.count,
       });
     })
@@ -262,16 +262,13 @@ exports.getSpList = function (req, res) {
         where: {
           ServiceID: serviceId,
         },
-        // include : [
-        //   {
-        //     model: Service,
-        //     required: true,
-        //     attributes: ["PricePerHour"],
-        //     // where: {
-        //     //    ServiceID: serviceId,
-        //     // },
-        //   },
-        // ]
+        include : [
+          {
+            model: Service,
+            required: true,
+            attributes: ["PricePerHour"],
+          },
+        ]
       },
       {
         model: Appointment,

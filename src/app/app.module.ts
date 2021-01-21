@@ -19,6 +19,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
@@ -31,8 +33,8 @@ import { ServiceproviderComponent } from './users/serviceprovider/serviceprovide
 import { UserHomePageComponent } from './customer-portal/user-home-page/user-home-page.component';
 import { AppointmentBookingComponent } from './customer-portal/appointment-booking/appointment-booking.component';
 import { AddNewAddressComponent } from './customer-portal/add-new-address/add-new-address.component';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { UserAppointmentsComponent } from './customer-portal/user-appointments/user-appointments.component';
+
 
 
 @NgModule({
@@ -48,7 +50,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     ServiceproviderComponent,
     UserHomePageComponent,
     AppointmentBookingComponent,
-    AddNewAddressComponent
+    AddNewAddressComponent,
+    UserAppointmentsComponent
   ],
   imports: [
     BrowserModule,
