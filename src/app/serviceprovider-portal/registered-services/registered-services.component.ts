@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { count } from 'console';
 import { registeredServices } from 'src/app/models/registeredServices.model';
 import { Services } from 'src/app/models/services.model';
 import { SpPortalService } from '../serviceprovider-portal.service';

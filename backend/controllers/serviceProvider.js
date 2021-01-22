@@ -5,10 +5,17 @@ const User = require("../models/dbSchema").userSchema;
 const Invoice = require("../models/dbSchema").invoiceSchema;
 
 exports.registerNew = (req, res) => {
-  ServiceProvider.create({
-    AppUserID: req.body.UserID,
+  ServiceProvider.findOrCreate({
+    where: {//object containing fields to found
+      AppUserID: req.body.AppUserID,
+      ServiceID: req.body.ServiceID,
+  },
+    defaults:
+    {
+      AppUserID: req.body.AppUserID,
     ServiceID: req.body.ServiceID,
     IsActive: req.body.IsActive,
+  }
   })
     .then((newpost) => {
       /* Rating.create({

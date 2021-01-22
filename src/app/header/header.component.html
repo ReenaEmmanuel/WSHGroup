@@ -25,6 +25,17 @@
       <a mat-button routerLink="/userappointments" routerLinkActive="mat-accent">Appointments</a>
     </li>
   </ul>
+  <ul>
+    <li *ngIf="userIsAuthenticated && UsrRole==1">
+      <a mat-button routerLink="/registeredservices" routerLinkActive="mat-accent">Home</a>
+    </li>
+    <li *ngIf="userIsAuthenticated && UsrRole==1">
+      <a mat-button routerLink="/registeredservices" routerLinkActive="mat-accent">Registered Services</a>
+    </li>
+    <li *ngIf="userIsAuthenticated && UsrRole==1">
+      <a mat-button routerLink="/registernewservices" routerLinkActive="mat-accent">Register New Services</a>
+    </li>
+  </ul>
   <span class="spacer"></span>
   <ul>
     <li *ngIf="!userIsAuthenticated">
