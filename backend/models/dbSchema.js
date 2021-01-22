@@ -72,7 +72,7 @@ const invoiceSchema = con.define("invoices", {
 });
 invoiceSchema.sync();
 
-userSchema.hasMany(serviceProviderSchema);
+userSchema.hasOne(serviceProviderSchema);
 serviceProviderSchema.belongsTo(userSchema);
 
 serviceSchema.hasMany(serviceProviderSchema);

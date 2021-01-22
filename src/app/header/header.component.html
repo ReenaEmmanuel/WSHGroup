@@ -16,13 +16,13 @@
   </ul>
   <ul>
     <li *ngIf="userIsAuthenticated && UsrRole==2">
+      <a mat-button routerLink="/userhomepage" routerLinkActive="mat-accent">Home</a>
+    </li>
+    <li *ngIf="userIsAuthenticated && UsrRole==2">
       <a mat-button routerLink="/newaddress" routerLinkActive="mat-accent">Add Address</a>
     </li>
     <li *ngIf="userIsAuthenticated && UsrRole==2">
       <a mat-button routerLink="/userappointments" routerLinkActive="mat-accent">Appointments</a>
-    </li>
-    <li *ngIf="userIsAuthenticated && UsrRole==2">
-      <a mat-button routerLink="/" routerLinkActive="mat-accent">Menu 3</a>
     </li>
   </ul>
   <span class="spacer"></span>

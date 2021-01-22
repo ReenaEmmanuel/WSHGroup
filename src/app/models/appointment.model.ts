@@ -1,4 +1,3 @@
-import { any } from "sequelize/types/lib/operators"
 
 export interface Appointments {
   UserID: number;

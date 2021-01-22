@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NumberValueAccessor, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Services } from 'src/app/models/services.model';
 import { ServicesListService } from 'src/app/service/servicelist.service';
 import { customerPortalService } from '../customer-portal.service';
@@ -25,7 +26,7 @@ export class AppointmentBookingComponent implements OnInit {
   pricePerHour : number;
   totalPrice :number = 0;
   totalTime : number;
-  constructor(private formBuilder: FormBuilder,private dataservice: ServicesListService, private service: customerPortalService) {
+  constructor(private formBuilder: FormBuilder,private dataservice: ServicesListService, private service: customerPortalService, private router: Router) {
 
   }
 
@@ -58,13 +59,13 @@ export class AppointmentBookingComponent implements OnInit {
         });
     }
   }
+
   calculatePricePerHour(){
     if(this.serviceProviders){
-      this.pricePerHour = this.serviceProviders[0].serviceproviders[0].service.PricePerHour;
+      this.pricePerHour = this.serviceProviders[0].serviceprovider.service.PricePerHour;
       console.log(this.pricePerHour);
     }
   }
-
 
   onServiceProviderSelection(serviceProviderId : any)
   {
@@ -73,14 +74,11 @@ export class AppointmentBookingComponent implements OnInit {
     }
   }
 
-  inputEvent(event : any){
-    console.log(event.value);
-  }
-
   onSubmit(){
     console.log(this.form);
     this.totalTime = +this.form.value.Time;
     this.totalPrice = this.totalTime * this.pricePerHour;
     this.service.createAppointment(+this.userid,this.form.value.ServiceProviderID, this.form.value.AppointmentDate, this.totalPrice);
+    this.router.navigate(['/userhomepage']);
   }
 }

@@ -106,3 +106,86 @@ exports.createInvoice = (req, res) => {
     });
 };
 
+//service list for each service provider
+// exports.getRegServiceList = (req, res) => {
+//   const serviceProviderId = +req.params.id;
+//   Service.findAll({
+//     attributes: ["id", "ServiceName", "PricePerHour"],
+//     include: [
+//       {
+//         model: ServiceProvider,
+//         required: true,
+//         attributes: ["ServiceID", "IsActive"],
+//         where: {
+//           AppUserID: serviceProviderId,
+//         },
+//       },
+//     ],
+//   })
+//     .then((result) => {
+//       res.status(200).json({
+//         result,
+//       });
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//       res.status(500).json({
+//         message: error,
+//       });
+//     });
+// };
+
+exports.getRegServiceList = (req, res) => {
+  const serviceProviderId = +req.params.id;
+  ServiceProvider.findAll({
+    attributes: ["id","AppUserID", "ServiceID", "IsActive"],
+    where: {  AppUserID: serviceProviderId, },
+    include:
+      {
+        model: Service,
+        required: true,
+        attributes: ["ServiceName", "PricePerHour"],
+      },
+
+  })
+    .then((result) => {
+      result = JSON.parse(JSON.stringify(result));
+      result.forEach(element => {
+        element.PricePerHour = element.service.PricePerHour;
+        element.ServiceName = element.service.ServiceName;
+        delete element.service;
+      });
+      res.status(200).json({
+        result,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: error,
+      });
+    });
+};
+
+//Update the IsActive state of Service for a particular Service Provider
+exports.updateSpService = function (req, res) {
+  ServiceProvider.update(
+    { IsActive: false },
+    { where: { id: req.params.spsId, IsActive: true } }
+  )
+    .then(function (rowsUpdated) {
+      if (rowsUpdated == 0) {
+        ServiceProvider.update(
+          { IsActive: true },
+          { where: { id: req.params.spsId, IsActive: false } }
+        );
+      }
+      res.json(rowsUpdated);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: error,
+      });
+    });
+};

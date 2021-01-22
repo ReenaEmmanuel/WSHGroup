@@ -8,28 +8,9 @@ router.get("/getServiceProviderList", SpController.getList);
 
 router.get("/createInvoice", SpController.createInvoice);
 
-// router.get("/getServiceProviderListForEachService/:id", function (req, res) {
-//   ServiceProvider.findAll({
-//     where : { ServiceID : req.params.id },
-//     attributes: ["id", "ServiceID"],
-//     include: [
-//       {
-//         model: User,
-//         required: true,
-//         attributes: ["FirstName" , "LastName"],
-//       }]
-//   })
-//     .then((result) => {
-//       res.status(200).json({
-//         message: "Service Providers extracted successfully",
-//         users: result,
-//       });
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//       res.status(500).json({
-//         message: error,
-//       });
-//     });
-// });
+router.get("/getRegServiceList/:id", SpController.getRegServiceList);
+
+//Update the IsActive state of Service for a particular Service Provider
+router.put("/setSpsActiveStatus/:spsId", SpController.updateSpService);
+
 module.exports = router;

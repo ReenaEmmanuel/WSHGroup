@@ -13,6 +13,7 @@ import { UserHomePageComponent } from './customer-portal/user-home-page/user-hom
 import { AppointmentBookingComponent } from './customer-portal/appointment-booking/appointment-booking.component';
 import { AddNewAddressComponent } from './customer-portal/add-new-address/add-new-address.component';
 import { UserAppointmentsComponent } from './customer-portal/user-appointments/user-appointments.component';
+import { RegisteredServicesComponent } from './serviceprovider-portal/registered-services/registered-services.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent, canActivate: [AuthGuard] },
@@ -26,7 +27,9 @@ const routes: Routes = [
   { path: "userhomepage", component: UserHomePageComponent, canActivate: [AuthGuard] },
   { path: "appointmentbooking", component: AppointmentBookingComponent, canActivate: [AuthGuard] },
   { path: "newaddress", component: AddNewAddressComponent, canActivate: [AuthGuard] },
-  { path: "userappointments", component: UserAppointmentsComponent, canActivate: [AuthGuard] }
+  { path: "userappointments", component: UserAppointmentsComponent, canActivate: [AuthGuard] },
+  { path: "registerdservices", component: RegisteredServicesComponent, canActivate: [AuthGuard] }
+
 ];
 
 @NgModule({

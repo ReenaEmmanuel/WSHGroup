@@ -280,17 +280,16 @@ exports.getSpList = function (req, res) {
       {
         model: ServiceProvider,
         required: true,
-        attributes: ["ServiceID"],
+        attributes: ["id","ServiceID","AppUserID"],
         where: {
           ServiceID: serviceId,
         },
-        include: [
+        include:
           {
             model: Service,
             required: true,
             attributes: ["PricePerHour"],
           },
-        ],
       },
       {
         model: Appointment,

@@ -81,6 +81,8 @@ exports.getList = function (req, res) {
     });
 }
 
+
+
 exports.getPricePerHour = function(req,res) {
   Service.findOne({
     attributes : ["PricePerHour"],

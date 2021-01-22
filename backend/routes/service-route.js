@@ -59,6 +59,7 @@ router.put("/setServiceActiveStatus/:ServiceId", ServiceController.updateService
 router.put("/deleteService/:ServiceId", ServiceController.deleteService );
 
 
+
 //Get Services List for Admin
 router.get("/getServiceList", ServiceController.getList);
 

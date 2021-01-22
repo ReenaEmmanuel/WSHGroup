@@ -34,6 +34,7 @@ import { UserHomePageComponent } from './customer-portal/user-home-page/user-hom
 import { AppointmentBookingComponent } from './customer-portal/appointment-booking/appointment-booking.component';
 import { AddNewAddressComponent } from './customer-portal/add-new-address/add-new-address.component';
 import { UserAppointmentsComponent } from './customer-portal/user-appointments/user-appointments.component';
+import { RegisteredServicesComponent } from './serviceprovider-portal/registered-services/registered-services.component';
 
 
 
@@ -51,7 +52,8 @@ import { UserAppointmentsComponent } from './customer-portal/user-appointments/u
     UserHomePageComponent,
     AppointmentBookingComponent,
     AddNewAddressComponent,
-    UserAppointmentsComponent
+    UserAppointmentsComponent,
+    RegisteredServicesComponent
   ],
   imports: [
     BrowserModule,
