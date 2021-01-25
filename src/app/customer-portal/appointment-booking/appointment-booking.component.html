@@ -1,4 +1,5 @@
-<mat-card class="address-card">
+<div>
+  <mat-card class="address-card">
   <mat-card-header>
     <mat-card-title class="card-container-center">Appointment</mat-card-title>
   </mat-card-header>
@@ -46,3 +47,26 @@
 </form>
 </mat-card-content>
 </mat-card>
+
+<div class="address-container">
+  <!-- <button mat-raised-button color="primary" class="addAddress" (click)="AddAddress()">Add New Address?</button> -->
+  <mat-selection-list #addresses [multiple]="false" >
+      <mat-list-option *ngFor="let a of address" [value]="a.id" (click)="getAddressid(a)" class="addr"> <!-- -->
+          {{a.DoorNo}}, {{a.Street1}}, {{a.Street2}}, {{a.Area}}, {{a.City}}, {{a.State}}, <br> {{a.Pincode}},<br> {{a.ContactNo}}, {{a.AltContactNo}} <br>
+      </mat-list-option>
+  </mat-selection-list>
+</div>
+
+<div class="payment-container">
+  <!-- <h1>Total Amount To be Paid : </h1> <h3><b> Rs. {{ GrandTotal }} </b></h3><br> -->
+  <h1>Payment Mode : </h1>
+  <mat-selection-list class="payment" #methods [multiple]="false" >
+      <mat-list-option *ngFor="let method of PaymentMethods" [value]="method">
+          {{method.Mode}}
+      </mat-list-option>
+    </mat-selection-list>
+    <!-- <br><a (click)="ConfirmOrder()"><h3>Confirm Order</h3></a> -->
+</div>
+</div>
+
+

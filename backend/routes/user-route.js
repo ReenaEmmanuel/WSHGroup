@@ -9,6 +9,8 @@ router.post("/login", UserController.login);
 //Get User List for Admin
 router.get("/getUserList", UserController.getUserList);
 
+router.get("/getSpListForAdmin", UserController.getSpListForAdmin);
+
 //Update the IsActive state of User
 router.put("/setUserActiveStatus/:UserId", UserController.setUserActiveStatus);
 
@@ -28,6 +30,8 @@ router.post("/createAddress", UserController.createAddress);
 router.put("/updateAddress/:AddressId", UserController.updateAddress);
 
 //Get Service Provider list based on Service ID and Appointment Date
-router.get("/getSpList/:id", UserController.getSpList)
+router.get("/getSpList/:id", UserController.getSpList);
 
+//Get address
+router.get("/getAddressList/:id", UserController.getAddressList);
 module.exports = router;

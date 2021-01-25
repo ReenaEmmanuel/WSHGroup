@@ -29,20 +29,25 @@ export class AddNewAddressComponent implements OnInit {
       'Contact': new FormControl(null, [Validators.required, Validators.pattern('[6-9]\\d{9}')]),
       'AlternateContact': new FormControl(null, [ Validators.pattern('[6-9]\\d{9}')]),
   });
+  this.userid = sessionStorage.getItem("UserID");
   }
   onSubmit(){
-    this.dataService.postAddress(+this.userid,
-      this.addressForm.value.Door,
-      this.addressForm.value.Street1,
-      this.addressForm.value.Street2,
-      this.addressForm.value.Area,
-      this.addressForm.value.City,
-      this.addressForm.value.State,
-      this.addressForm.value.Pincode,
-      this.addressForm.value.Contact,
-      this.addressForm.value.AlternateContact);
+    if(this.addressForm.valid){
+      this.dataService.postAddress(+this.userid,
+        this.addressForm.value.Door,
+        this.addressForm.value.Street1,
+        this.addressForm.value.Street2,
+        this.addressForm.value.Area,
+        this.addressForm.value.City,
+        this.addressForm.value.State,
+        this.addressForm.value.Pincode,
+        this.addressForm.value.Contact,
+        this.addressForm.value.AlternateContact);
+        this.router.navigate(["/userhomepage"])
+      }
 
-  this.router.navigate(["/userhomepage"])
+
+
 }
 
 }

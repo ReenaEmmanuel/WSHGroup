@@ -9,7 +9,7 @@
           <td>
           <mat-form-field class="full-width" appearance="outline">
               <mat-label>Door No.</mat-label>
-              <input  matInput formControlName="Door" placeholder="Door no."  name="Door"  >
+              <input  matInput formControlName="Door" placeholder="Door no."  name="Door" required >
               <mat-error *ngIf="addressForm.controls.Door.touched && addressForm.controls.Door.invalid">
                 <span *ngIf="addressForm.controls.Door.errors.required">This field is mandatory.</span>
               </mat-error>
@@ -18,7 +18,7 @@
           <td>
            <mat-form-field class="full-width" appearance="outline">
               <mat-label>Street 1</mat-label>
-              <input  matInput formControlName="Street1" placeholder="Street 1" name="Street1"  >
+              <input  matInput formControlName="Street1" placeholder="Street 1" name="Street1" required >
               <mat-error *ngIf="addressForm.controls.Street1.touched && addressForm.controls.Street1.invalid">
                 <span *ngIf="addressForm.controls.Street1.errors.required">This field is mandatory.</span>
               </mat-error>
@@ -35,7 +35,7 @@
           <td>
            <mat-form-field class="full-width" appearance="outline">
               <mat-label>Area</mat-label>
-              <input  matInput  formControlName="Area" placeholder="Area" name="Area" >
+              <input  matInput  formControlName="Area" placeholder="Area" name="Area" required>
               <mat-error *ngIf="addressForm.controls.Area.touched && addressForm.controls.Area.invalid">
                 <span *ngIf="addressForm.controls.Area.errors.required">This field is mandatory.</span>
               </mat-error>
@@ -46,7 +46,7 @@
             <td>
            <mat-form-field class="full-width" appearance="outline">
               <mat-label>City</mat-label>
-              <input  matInput formControlName="City" placeholder="City"  name="City" >
+              <input  matInput formControlName="City" placeholder="City"  name="City" required>
               <mat-error *ngIf="addressForm.controls.City.touched && addressForm.controls.City.invalid">
                 <span *ngIf="addressForm.controls.City.errors.required">This field is mandatory.</span>
               </mat-error>
@@ -55,7 +55,7 @@
           <td>
            <mat-form-field class="full-width" appearance="outline">
               <mat-label>State</mat-label>
-              <input  matInput formControlName="State" placeholder="State"  name="State" >
+              <input  matInput formControlName="State" placeholder="State"  name="State" required>
               <mat-error *ngIf="addressForm.controls.State.touched && addressForm.controls.State.invalid">
                 <span *ngIf="addressForm.controls.State.errors.required">This field is mandatory.</span>
               </mat-error>
@@ -64,7 +64,7 @@
           </tr>
            <mat-form-field class="full-width" appearance="outline">
               <mat-label>Pincode</mat-label>
-              <input  matInput formControlName="Pincode" placeholder="Pincode"  name="Pincode" >
+              <input  matInput formControlName="Pincode" placeholder="Pincode"  name="Pincode" required>
               <mat-error *ngIf="addressForm.controls.Pincode.touched && addressForm.controls.Pincode.invalid">
                 <span *ngIf="addressForm.controls.Pincode.errors.required">This field is mandatory.</span>
                 <span *ngIf="addressForm.controls.Contact.errors.pattern">This field is invalid.</span>
@@ -74,7 +74,7 @@
              <td>
            <mat-form-field class="full-width" appearance="outline">
               <mat-label>Contact</mat-label>
-              <input  matInput formControlName="Contact" placeholder="Contact"  name="Contact" >
+              <input  matInput formControlName="Contact" placeholder="Contact"  name="Contact" required>
               <mat-error *ngIf="addressForm.controls.Contact.touched && addressForm.controls.Contact.invalid">
                 <span *ngIf="addressForm.controls.Contact.errors.required">This field is mandatory.</span>
                 <span *ngIf="addressForm.controls.Contact.errors.pattern">This field is invalid.</span>

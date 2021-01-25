@@ -13,8 +13,8 @@ exports.registerNew = (req, res) => {
     defaults:
     {
       AppUserID: req.body.AppUserID,
-    ServiceID: req.body.ServiceID,
-    IsActive: req.body.IsActive,
+      ServiceID: req.body.ServiceID,
+      IsActive: req.body.IsActive,
   }
   })
     .then((newpost) => {

@@ -1,6 +1,6 @@
 
 export interface Appointments {
-  UserID: number;
+  AppUserID: number;
   ServiceProviderID: number;
   AppointmentDate: any;
   StartTime: any;

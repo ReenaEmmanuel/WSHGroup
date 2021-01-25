@@ -98,6 +98,29 @@ exports.getUserList = function (req, res) {
     });
 };
 
+exports.getSpListForAdmin = function (req, res) {
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  User.findAndCountAll({
+    where: { UsrRole: 1 },
+    limit: pageSize,
+    offset: pageSize * (currentPage - 1),
+  })
+    .then((result) => {
+      res.status(200).json({
+        message: "Users extracted successfully",
+        users: result.rows,
+        count: result.count,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: error,
+      });
+    });
+};
+
 exports.setUserActiveStatus = function (req, res) {
   User.update(
     { IsActive: false },
@@ -261,6 +284,26 @@ exports.updateAddress = (req, res) => {
     .then((newpost) => {
       res.status(201).json({
         message: "Address updated successfully",
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: error,
+      });
+    });
+};
+
+exports.getAddressList = function (req, res) {
+  const userId = +req.params.id;
+  // const appointmentDate = +req.params.date;
+  Address.findAll({
+    where : { AppUserID : userId }
+  })
+    .then((result) => {
+      res.status(200).json({
+        message: "Addresses extracted successfully",
+        addresses: result,
       });
     })
     .catch((error) => {

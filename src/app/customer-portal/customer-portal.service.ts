@@ -24,8 +24,13 @@ export class customerPortalService {
     return this.http.get<{message: string; PricePerHour:any}>( this.serviceurl + "getPrice/"+ id);
   }
 
+  getAddresses(id: number) {
+    return this.http.get<{message: string; addresses:Address[]}>( this.userurl + "getAddressList/"+ id);
+  }
+
+
   postAddress(userid: number, Door: number,Street1: string,Street2: string,Area: string,City: string, State: string,Pincode: number,Contact: number,AlternateContact:number) {
-    const address: Address = { AppUserID:userid, DoorNo:Door, Street1:Street1, Street2:Street2, Area: Area, City: City, State:State, Pincode:Pincode, ContactNo:Contact, AltContactNo:AlternateContact };
+    const address: any = { AppUserID:userid, DoorNo:Door, Street1:Street1, Street2:Street2, Area: Area, City: City, State:State, Pincode:Pincode, ContactNo:Contact, AltContactNo:AlternateContact };
     this.http
       .post(this.userurl+"createAddress", address)
       .subscribe(response => {
@@ -37,7 +42,7 @@ export class customerPortalService {
   }
 
   createAppointment(AppUserID: number, ServiceProviderID: number, AppointmentDate: any, totalCost : number){
-    const appointment: Appointments = { UserID: AppUserID, ServiceProviderID: ServiceProviderID, AppointmentDate: AppointmentDate, StartTime: null, EndTime: null, Status: 1, PaymentMode: 1, TotalCost: totalCost, IsPaid: 1 };
+    const appointment: Appointments = { AppUserID: AppUserID, ServiceProviderID: ServiceProviderID, AppointmentDate: AppointmentDate, StartTime: null, EndTime: null, Status: 1, PaymentMode: 1, TotalCost: totalCost, IsPaid: 1 };
     this.http
     .post(this.userurl+"createAppointment", appointment)
     .subscribe(response => {

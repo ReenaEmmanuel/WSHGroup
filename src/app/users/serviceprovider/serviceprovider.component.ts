@@ -16,6 +16,9 @@ export class ServiceproviderComponent implements AfterViewInit  {
   displayedColumns: string[] = ['id', 'FirstName', 'LastName', 'Email', 'Age', 'IsActive', 'Deactivate'];
   dataSource!: MatTableDataSource<User>;
   user : User[] = [];
+  totalUsers = 10;
+  usersPerPage = 5;
+  currentPage = 1;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -25,9 +28,9 @@ export class ServiceproviderComponent implements AfterViewInit  {
    }
 
    ngAfterViewInit(){
-    this.dataservice.getServiceProviderList()
+    this.dataservice.getServiceProviderList(this.usersPerPage,this.currentPage)
       .subscribe(res => {
-        this.user= res;
+        this.user= res.users;
         // console.log(this.user);
         console.log(this.user);
         this.dataSource = new MatTableDataSource(this.user);

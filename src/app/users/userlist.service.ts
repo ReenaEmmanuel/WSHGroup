@@ -8,6 +8,7 @@ import { User } from "../models/user.model";
 export class UserListService {
 
   url = environment.apiUrl + "user/";
+  spurl = environment.apiUrl + "serviceProvider/";
 
   constructor(private http: HttpClient) { }
 
@@ -16,8 +17,9 @@ export class UserListService {
     return this.http.get<{message: string; users:any; count: number}>(this.url+"getUserList"+ queryParams);
   }
 
-  getServiceProviderList() {
-    return this.http.get<User[]>(this.url+"getServiceProviderList");
+  getServiceProviderList(usersPerPage: number, currentPage: number) {
+    const queryParams = `?pagesize=${usersPerPage}&page=${currentPage}`;
+    return this.http.get<{message: string; users:any; count: number}>(this.url+"getSpListForAdmin"+ queryParams);
   }
 
   deactivateUser(UserId: string) {

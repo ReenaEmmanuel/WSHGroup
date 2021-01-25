@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NumberValueAccessor, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Address } from 'src/app/models/address.model';
 import { Services } from 'src/app/models/services.model';
 import { ServicesListService } from 'src/app/service/servicelist.service';
 import { customerPortalService } from '../customer-portal.service';
@@ -12,6 +13,7 @@ import { customerPortalService } from '../customer-portal.service';
 })
 export class AppointmentBookingComponent implements OnInit {
 
+  typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
   services : Services[] = [];
   serviceProviders : any[] = [];
   // isLoading = false;
@@ -26,11 +28,20 @@ export class AppointmentBookingComponent implements OnInit {
   pricePerHour : number;
   totalPrice :number = 0;
   totalTime : number;
+  address : Address[] = [];
+  addressId : any;
+
+  PaymentMethods : any[] =
+  [{"PaymentMode_ID" : 742001, "Mode" : "Online"},
+  {"PaymentMode_ID" : 742002, "Mode" : "Cash"},]
+
   constructor(private formBuilder: FormBuilder,private dataservice: ServicesListService, private service: customerPortalService, private router: Router) {
 
   }
 
   ngOnInit(): void {
+    this.userid = sessionStorage.getItem("UserID");
+
     this.dataservice.getServicesList(100,1)
       .subscribe(res => {
         this.services = res.services;
@@ -43,7 +54,11 @@ export class AppointmentBookingComponent implements OnInit {
         'Time' : new FormControl(null, Validators.required),
       });
 
-      this.userid = sessionStorage.getItem("UserID");
+    this.service.getAddresses(this.userid).subscribe(res => {
+      this.address= res.addresses;
+      console.log(res);
+    });
+
   }
 
   onServiceSelection(serviceId: any) {
@@ -80,5 +95,9 @@ export class AppointmentBookingComponent implements OnInit {
     this.totalPrice = this.totalTime * this.pricePerHour;
     this.service.createAppointment(+this.userid,this.form.value.ServiceProviderID, this.form.value.AppointmentDate, this.totalPrice);
     this.router.navigate(['/userhomepage']);
+  }
+
+  getAddressid(a: any){
+    console.log(a);
   }
 }
