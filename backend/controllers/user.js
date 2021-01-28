@@ -298,7 +298,7 @@ exports.getAddressList = function (req, res) {
   const userId = +req.params.id;
   // const appointmentDate = +req.params.date;
   Address.findAll({
-    where : { AppUserID : userId }
+    where: { AppUserID: userId },
   })
     .then((result) => {
       res.status(200).json({
@@ -314,44 +314,3 @@ exports.getAddressList = function (req, res) {
     });
 };
 
-exports.getSpList = function (req, res) {
-  const serviceId = +req.params.id;
-  // const appointmentDate = +req.params.date;
-  User.findAll({
-    attributes: ["id", "FirstName", "LastName"],
-    include: [
-      {
-        model: ServiceProvider,
-        required: true,
-        attributes: ["id","ServiceID","AppUserID"],
-        where: {
-          ServiceID: serviceId,
-        },
-        include:
-          {
-            model: Service,
-            required: true,
-            attributes: ["PricePerHour"],
-          },
-      },
-      {
-        model: Appointment,
-        attributes: ["AppointmentDate"],
-        // where: {AppointmentDate: {[Op.ne]: appointmentDate}}
-        // {[Op.ne]: '2021-01-20'} }
-      },
-    ],
-  })
-    .then((result) => {
-      res.status(200).json({
-        message: "Service Providers extracted successfully",
-        users: result,
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).json({
-        message: error,
-      });
-    });
-};

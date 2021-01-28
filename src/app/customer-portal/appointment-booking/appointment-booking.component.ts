@@ -62,7 +62,7 @@ export class AppointmentBookingComponent implements OnInit {
   }
 
   onServiceSelection(serviceId: any) {
-    if(serviceId)
+     if(serviceId)
     {
       console.log(serviceId);
       this.selectedServiceID = serviceId;
@@ -70,7 +70,7 @@ export class AppointmentBookingComponent implements OnInit {
         .subscribe( res => {
           this.serviceProviders = res.users;
           console.log(this.serviceProviders);
-          this.calculatePricePerHour();
+          //this.calculatePricePerHour();
         });
     }
   }

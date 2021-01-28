@@ -4,7 +4,7 @@ exports.addNewService = (req, res) => {
   Service.create({
     PricePerHour: req.body.PricePerHour,
     ServiceName: req.body.ServiceName,
-    IsActive: true
+    IsActive: true,
   })
     .then((newpost) => {
       res.status(201).json({
@@ -17,7 +17,7 @@ exports.addNewService = (req, res) => {
         message: error,
       });
     });
-}
+};
 
 exports.updateService = function (req, res) {
   Service.update(
@@ -39,15 +39,13 @@ exports.updateService = function (req, res) {
         message: error,
       });
     });
-}
+};
 
 exports.deleteService = function (req, res) {
-  Service.destroy(
-    { where: { id: req.params.ServiceId, IsActive: false } }
-  )
+  Service.destroy({ where: { id: req.params.ServiceId, IsActive: false } })
     .then(function (rowsDeleted) {
       if (rowsDeleted == 1) {
-        console.log('Service deleted successfully');
+        console.log("Service deleted successfully");
       }
       res.json(rowsDeleted);
     })
@@ -57,7 +55,7 @@ exports.deleteService = function (req, res) {
         message: error,
       });
     });
-}
+};
 
 exports.getList = function (req, res) {
   const pageSize = +req.query.pagesize;
@@ -65,13 +63,17 @@ exports.getList = function (req, res) {
   console.log(req.query);
 
   Service.findAndCountAll({
-     limit: pageSize,
-     offset: pageSize * (currentPage-1),
+    limit: pageSize,
+    offset: pageSize * (currentPage - 1),
   })
     .then((result) => {
-      res.status(200).json({ message: "Services extracted successfully",
-      services : result.rows,
-      count : result.count });
+      res
+        .status(200)
+        .json({
+          message: "Services extracted successfully",
+          services: result.rows,
+          count: result.count,
+        });
     })
     .catch((error) => {
       console.log(error);
@@ -79,22 +81,24 @@ exports.getList = function (req, res) {
         message: error,
       });
     });
-}
+};
 
-
-
-exports.getPricePerHour = function(req,res) {
+exports.getPricePerHour = function (req, res) {
   Service.findOne({
-    attributes : ["PricePerHour"],
-    where : { id: req.params.id }
+    attributes: ["PricePerHour"],
+    where: { id: req.params.id },
   })
-  .then((result) => {
-    res.status(200).json({ message: "Price per hour extracted successfully",
-    PricePerHour: result.PricePerHour });
-  })
-  .catch((error) => {
-    res.status(500).json({
-      message: error,
+    .then((result) => {
+      res
+        .status(200)
+        .json({
+          message: "Price per hour extracted successfully",
+          PricePerHour: result.PricePerHour,
+        });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: error,
+      });
     });
-  });
-}
+};

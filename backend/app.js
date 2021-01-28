@@ -7,6 +7,7 @@ const app = express();
 const userRoutes = require("./routes/user-route");
 const serviceRoutes = require("./routes/service-route");
 const serviceProviderRoutes = require("./routes/serviceProvider-route");
+const appointmentRoutes = require("./routes/appointments-route");
 
 /*mongoose.connect("mongodb://localhost:27017/demoDb")
 .then(() => {
@@ -40,5 +41,6 @@ app.use((req, res, next) => {
 app.use("/user",userRoutes);
 app.use("/service",serviceRoutes);
 app.use("/serviceProvider",serviceProviderRoutes);
+app.use("/appointment",appointmentRoutes);
 
 module.exports = app;

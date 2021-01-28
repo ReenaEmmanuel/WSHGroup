@@ -6,18 +6,20 @@ const Invoice = require("../models/dbSchema").invoiceSchema;
 
 exports.registerNew = (req, res) => {
   ServiceProvider.findOrCreate({
-    where: {//object containing fields to found
+    where: {
+      //object containing fields to found
       AppUserID: req.body.AppUserID,
       ServiceID: req.body.ServiceID,
-  },
-    defaults:
-    {
+    },
+    defaults: {
       AppUserID: req.body.AppUserID,
       ServiceID: req.body.ServiceID,
       IsActive: req.body.IsActive,
-  }
+    },
   })
-    .then((newpost) => {
+    .then((result) => {
+      objFinal = JSON.parse(JSON.stringify(result));
+      if (!objFinal[0].IsActive) objFinal[0].IsActive = true;
       /* Rating.create({
         ServiceProviderID: req.body.UserID
       })
@@ -34,6 +36,7 @@ exports.registerNew = (req, res) => {
         });*/
       res.status(201).json({
         message: "ServiceProvider registered successfully",
+        result: objFinal,
       });
     })
     .catch((error) => {
@@ -145,19 +148,17 @@ exports.createInvoice = (req, res) => {
 exports.getRegServiceList = (req, res) => {
   const serviceProviderId = +req.params.id;
   ServiceProvider.findAll({
-    attributes: ["id","AppUserID", "ServiceID", "IsActive"],
-    where: {  AppUserID: serviceProviderId, },
-    include:
-      {
-        model: Service,
-        required: true,
-        attributes: ["ServiceName", "PricePerHour"],
-      },
-
+    attributes: ["id", "AppUserID", "ServiceID", "IsActive"],
+    where: { AppUserID: serviceProviderId },
+    include: {
+      model: Service,
+      required: true,
+      attributes: ["ServiceName", "PricePerHour"],
+    },
   })
     .then((result) => {
       result = JSON.parse(JSON.stringify(result));
-      result.forEach(element => {
+      result.forEach((element) => {
         element.PricePerHour = element.service.PricePerHour;
         element.ServiceName = element.service.ServiceName;
         delete element.service;

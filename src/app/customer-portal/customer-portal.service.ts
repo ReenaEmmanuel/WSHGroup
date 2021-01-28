@@ -12,12 +12,13 @@ export class customerPortalService {
   url = environment.apiUrl + "serviceProvider/";
   userurl = environment.apiUrl + "user/";
   serviceurl = environment.apiUrl + "service/";
+  appointmenturl = environment.apiUrl + "appointment/";
 
   constructor(private http: HttpClient) { }
 
   getServicesProviderListForEachService(id: number) {
     // const dateString = date.toISOString();
-    return this.http.get<{message: string; users:any}>( this.userurl + "getSpList/"+ id);
+    return this.http.get<{message: string; users:any}>( this.appointmenturl + "getSpList/"+ id);
   }
 
   getPrice(id: number) {

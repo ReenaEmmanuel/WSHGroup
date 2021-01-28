@@ -29,9 +29,6 @@ router.post("/createAddress", UserController.createAddress);
 //Update Address
 router.put("/updateAddress/:AddressId", UserController.updateAddress);
 
-//Get Service Provider list based on Service ID and Appointment Date
-router.get("/getSpList/:id", UserController.getSpList);
-
 //Get address
 router.get("/getAddressList/:id", UserController.getAddressList);
 module.exports = router;
