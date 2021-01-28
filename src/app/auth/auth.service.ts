@@ -4,6 +4,7 @@ import { AuthData, LoginData } from "./auth-data.model";
 import { Subject } from "rxjs";
 import { Router } from "@angular/router";
 import { environment } from "../../environments/environment";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Injectable({ providedIn : "root" })
 
@@ -17,7 +18,7 @@ export class AuthService {
   private UsrRole: any;
   url = environment.apiUrl + "user/";
 
-  constructor( private http:HttpClient, private router: Router) {}
+  constructor( private http:HttpClient, private router: Router, private snackBar: MatSnackBar) {}
 
   getToken() {
     return this.token;
@@ -45,6 +46,12 @@ export class AuthService {
       .post(this.url+"signup", authData)
       .subscribe(response => {
         console.log(response);
+        this.router.navigate(["/login"]);
+      },
+      error => {
+        this.snackBar.open("Please enter all details correctly", 'OK', {
+          duration: environment.snackBarTime,
+        })
       });
   }
 
@@ -73,7 +80,14 @@ export class AuthService {
           else
           this.router.navigate(["/"]);
         }
-      });
+      },
+        error => {
+          this.snackBar.open("Please enter valid credentials", 'OK', {
+            duration: environment.snackBarTime,
+          })
+        }
+      );
+
   }
 
   logout() {

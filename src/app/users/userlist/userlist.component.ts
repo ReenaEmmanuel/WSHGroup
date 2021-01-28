@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import {DataSource} from '@angular/cdk/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-userlist',
@@ -24,7 +26,7 @@ export class UserlistComponent implements OnInit  {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dataservice: UserListService) {
+  constructor(private dataservice: UserListService, private snackBar: MatSnackBar) {
 
    }
 
@@ -49,14 +51,29 @@ export class UserlistComponent implements OnInit  {
     }
   }
 
-  deactivate(id: string) {
-        console.log(id);
-        this.dataservice.deactivateUser(id).
-        subscribe(res => {
-          console.log(res);
-          window.location.reload();
+  deactivate(element: any) {
+    console.log(element.id);
+    this.dataservice.deactivateUser(element.id).
+    subscribe(res => {
+      console.log(res);
+      if(element.IsActive == true){
+        this.snackBar.open("User has been deactivated", 'OK', {
+          duration: environment.snackBarTime,
         });
       }
+      else{
+        this.snackBar.open("User has been Activated", 'OK', {
+          duration: environment.snackBarTime,
+        });
+      }
+      window.location.reload();
+    },
+    error => {
+      this.snackBar.open("Cannot Deactivate User", 'OK', {
+        duration: environment.snackBarTime,
+      });
+    });
+  }
 
       onChangedPage(pageData: PageEvent) {
         this.currentPage = pageData.pageIndex +1;

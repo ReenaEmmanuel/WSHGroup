@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
+import { environment } from "src/environments/environment";
 import { AuthService } from "../auth.service";
 
 
@@ -11,13 +13,15 @@ import { AuthService } from "../auth.service";
 export class LoginComponent {
   isLoading = false;
 
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router, private snackBar: MatSnackBar) {}
 
   onLogin(form: NgForm) {
     if (form.invalid) {
-      return;
+      this.snackBar.open("Please enter valid credentials", 'OK', {
+      duration: environment.snackBarTime,
+    });
+    return;
     }
-    this.isLoading = true;
     this.authService.login(form.value.Email, form.value.UsrPwd);
   }
 }

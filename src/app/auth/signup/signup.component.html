@@ -18,10 +18,9 @@
       <input type="password" name="UsrPwd" ngModel matInput placeholder="Password" #passwordInput="ngModel" required>
       <mat-error *ngIf="passwordInput.invalid">Please enter a valid password.</mat-error>
     </mat-form-field>
-
     <mat-form-field>
       <mat-label>User Role</mat-label>
-    <mat-select [(ngModel)]="UsrRole" name="UsrRole">
+    <mat-select matNativeControl [(ngModel)]="UsrRole" ngModel name="UsrRole" required>
       <mat-option [value]=1>
         Service Provider
       </mat-option>

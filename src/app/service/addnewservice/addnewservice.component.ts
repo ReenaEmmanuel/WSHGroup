@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { ServicesListService } from '../servicelist.service';
 import { mimeType } from './mime-type.validator';
 
@@ -13,7 +15,7 @@ export class AddnewserviceComponent implements OnInit{
   isLoading = false;
   imagePreview!: string;
   form!: any;
-  constructor(public dataService: ServicesListService, private router: Router) {}
+  constructor(public dataService: ServicesListService, private router: Router, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -29,6 +31,9 @@ export class AddnewserviceComponent implements OnInit{
 
     add() {
       if (this.form.invalid) {
+        this.snackBar.open("Please fill in all the details","", {
+          duration: environment.snackBarTime,
+        });
         return;
       }
       this.isLoading = true;
@@ -38,7 +43,6 @@ export class AddnewserviceComponent implements OnInit{
           this.form.value.image
         );
       this.form.reset();
-
       this.router.navigate(["/servicelist"]);
     }
 

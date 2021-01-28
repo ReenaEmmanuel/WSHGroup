@@ -21,6 +21,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { SignupComponent } from './auth/signup/signup.component';
@@ -37,6 +39,7 @@ import { AddNewAddressComponent } from './customer-portal/add-new-address/add-ne
 import { UserAppointmentsComponent } from './customer-portal/user-appointments/user-appointments.component';
 import { RegisteredServicesComponent } from './serviceprovider-portal/registered-services/registered-services.component';
 import { RegisterNewServiceComponent } from './serviceprovider-portal/register-new-service/register-new-service.component';
+import { SpAppointmentListComponent } from './serviceprovider-portal/sp-appointment-list/sp-appointment-list.component';
 
 
 
@@ -57,7 +60,8 @@ import { RegisterNewServiceComponent } from './serviceprovider-portal/register-n
     AddNewAddressComponent,
     UserAppointmentsComponent,
     RegisteredServicesComponent,
-    RegisterNewServiceComponent
+    RegisterNewServiceComponent,
+    SpAppointmentListComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +84,8 @@ import { RegisterNewServiceComponent } from './serviceprovider-portal/register-n
     MatGridListModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

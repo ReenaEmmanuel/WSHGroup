@@ -7,6 +7,8 @@ import { MatSort } from '@angular/material/sort';
 import { ServicesListService } from '../servicelist.service';
 import { Services } from '../../models/services.model';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-servicelist',
@@ -25,7 +27,7 @@ export class ServicelistComponent implements OnInit  {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dataservice: ServicesListService, private router: Router) {
+  constructor(private dataservice: ServicesListService, private router: Router, private snackBar: MatSnackBar) {
 
    }
 
@@ -54,14 +56,30 @@ export class ServicelistComponent implements OnInit  {
     this.router.navigate(["/addnewservice"]);
   }
 
-  deactivate(id: string) {
-        console.log(id);
-        this.dataservice.deactivateService(id).
-        subscribe(res => {
-          console.log(res);
-          window.location.reload();
+
+  deactivate(element: any) {
+    console.log(element.id);
+    this.dataservice.deactivateService(element.id).
+    subscribe(res => {
+      console.log(res);
+      if(element.IsActive == true){
+        this.snackBar.open("Service Provider has been deactivated", 'OK', {
+          duration: environment.snackBarTime,
         });
       }
+      else{
+        this.snackBar.open("Service Provider has been Activated", 'OK', {
+          duration: environment.snackBarTime,
+        });
+      }
+      window.location.reload();
+    },
+    error => {
+      this.snackBar.open("Cannot Deactivate User", 'OK', {
+        duration: environment.snackBarTime,
+      });
+    });
+  }
 
       onChangedPage(pageData: PageEvent) {
         this.currentPage = pageData.pageIndex +1;

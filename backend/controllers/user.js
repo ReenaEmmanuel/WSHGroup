@@ -52,7 +52,11 @@ exports.login = (req, res) => {
 
 exports.signUp = (req, res, next) => {
   bcrypt.hash(req.body.UsrPwd, 10).then((hash) =>
-    User.create({
+    User.findOrCreate({
+      where: {
+        Email: req.body.Email,
+      },
+      defaults: {
       FirstName: req.body.FirstName,
       LastName: req.body.LastName,
       Age: req.body.Age,
@@ -60,7 +64,8 @@ exports.signUp = (req, res, next) => {
       UsrPwd: hash,
       UsrRole: req.body.UsrRole,
       IsActive: req.body.IsActive,
-    })
+    }
+  })
       .then((newpost) => {
         res.status(201).json({
           message: "User added successfully",

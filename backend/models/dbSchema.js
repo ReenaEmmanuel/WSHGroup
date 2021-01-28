@@ -63,6 +63,7 @@ const appointmentSchema = con.define("appointments", {
   PaymentMode: { type: sequelize.ENUM, values: ['Online', 'Direct'] },
   TotalCost: { type: sequelize.DECIMAL(10, 2) },
   IsPaid: { type: sequelize.BOOLEAN, defaultValue: false },
+  AddressID : { type: sequelize.INTEGER },
 });
 appointmentSchema.sync();
 

@@ -78,6 +78,10 @@ exports.getAppointmentList = function (req, res) {
   ServiceProvider.findAll({
     where: { AppUserID: appUserId },
     include: [
+      // {
+      //   model : ServiceProvider,
+      //   where: { id: serviceProviderId }
+      // },
       {
         model: Service,
         required: true,
