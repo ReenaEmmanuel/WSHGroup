@@ -3,6 +3,7 @@ const Appointment = require("../models/dbSchema").appointmentSchema;
 const Address = require("../models/dbSchema").addressSchema;
 const Service = require("../models/dbSchema").serviceSchema;
 const ServiceProvider = require("../models/dbSchema").serviceProviderSchema;
+const sequelize = require("sequelize");
 
 exports.getSpList = function (req, res) {
   const serviceId = +req.params.id;
@@ -26,39 +27,42 @@ exports.getSpList = function (req, res) {
       {
         model: Appointment,
         attributes: ["AppointmentDate", "AddressID"],
+        // where: {
+        //   AppointmentDate:
+        //   {
+        //     [sequelize.Op.not]: '2021-01-20'
+        //   },
+          // $or:
+          //   {
+          //     AppointmentDate: null
+          //     //   {
+          //     //       $eq: null
+          //     //   }
+          //   },
+       // }
       },
     ],
   })
     .then((result) => {
-      // let objJson = JSON.parse(JSON.stringify(result));
-      // let objFinal = objJson.map((item) => {
-      //   console.log(item.serviceprovider.id);
-      //   return {
-      //     ServiceProviderID: item.serviceprovider.id,
-      //   };
-      // });
-      // let filteredObj = objFinal.filter(
-      //         (item) => item.appointments.AppointmentDate === "2021-01-20"
-      //       );
-      // var objFinal = {ServiceProviderID:"",ServicePricePerHour:""};
-      objFinal = JSON.parse(JSON.stringify(result));
-      // let obj = result.map((item)=>{})
-      for (let i = 0; i < result.length; i++) {
-        objFinal[i].ServiceProviderID = result[i].serviceprovider.id;
-        objFinal[i].ServicePricePerHour =
-          result[i].serviceprovider.service.PricePerHour;
-        delete objFinal[i].serviceprovider;
-        for (let j = 0; j < result[i].appointments.length; j++) {
-          if (result[i].appointments[j].AppointmentDate == appointmentDate) {
-            delete objFinal[i];
-            break;
-          }
+      let objJson = JSON.parse(JSON.stringify(result));
+      let filteredArray = objJson.filter(
+        (item) => item.appointments.length === 0
+      );
+      // filteredArray = objJson.filter(
+      //   (item) => item.appointments.length > 0 &&
+      // );
+
+      let objFinal = filteredArray.map((item) => {
+        return {
+          FirstName: item.FirstName,
+          LastName: item.LastName,
+          PricePerHour: item.serviceprovider.service.PricePerHour,
         }
-      }
+      });
 
       res.status(200).json({
         message: "Service Providers extracted successfully",
-        users: objFinal,
+        serviceProvider: result,
       });
     })
     .catch((error) => {
@@ -70,54 +74,88 @@ exports.getSpList = function (req, res) {
 };
 
 exports.getAppointmentList = function (req, res) {
-  const serviceProviderId = +req.params.id;
-  Appointment.findAll({
-    where: { ServiceProviderID: serviceProviderId },
+  const appUserId = +req.params.id;
+  ServiceProvider.findAll({
+    where: { AppUserID: appUserId },
     include: [
       {
-        model: Address,
+        model: Service,
         required: true,
-        attributes: [
-          "DoorNo",
-          "Street1",
-          "Street2",
-          "Area",
-          "City",
-          "State",
-          "Pincode",
-          "ContactNo",
-          "AltContactNo",
-        ],
       },
       {
-        model: User,
-        required: true,
+        model: Appointment,
+        required: false,
+        include: [
+          {
+            model: Address,
+            required: true,
+          },
+          {
+            model: User,
+            required: true,
+          },
+        ],
       },
     ],
   })
     .then((result) => {
-      objFinal = JSON.parse(JSON.stringify(result));
-      for (let i = 0; i < objFinal.length; i++) {
-        objFinal[i].DoorNo = objFinal[i].address.DoorNo;
-        objFinal[i].Street1 = objFinal[i].address.Street1;
-        objFinal[i].Street2 = objFinal[i].address.Street2;
-        objFinal[i].Area = objFinal[i].address.Area;
-        objFinal[i].City = objFinal[i].address.City;
-        objFinal[i].State = objFinal[i].address.State;
-        objFinal[i].Pincode = objFinal[i].address.Pincode;
-        objFinal[i].ContactNo = objFinal[i].address.ContactNo;
-        objFinal[i].AltContactNo = objFinal[i].address.AltContactNo;
-        delete objFinal[i].address;
+      objJson = JSON.parse(JSON.stringify(result));
+      let filteredArray = objJson.filter(
+        (item) => item.appointments.length > 0
+      );
+      // let objFinal = filteredArray.map((item) => {
+      //   console.log(item.appointments.length);
+      //   for (let i = 0; i < item.appointments.length; i++) {
+      //     return {
+      //       ServiceProviderAppUserID: item.AppUserID,
+      //       ServiceProviderID: item.id,
+      //       ServiceID: item.serviceId,
+      //       ServiceName: item.service.ServiceName,
+      //       //Appointments: item.appointments,
+      //       AppointmentDate: item.appointments[i].AppointmentDate,
+      //       ClientFirstName: item.appointments[i].appuser.FirstName,
+      //       ClientLastName: item.appointments[i].appuser.LastName,
+      //       ClientAddressDoorNo: item.appointments[i].address.DoorNo,
+      //       ClientAddressStreet1: item.appointments[i].address.Street1,
+      //       ClientAddressStreet2: item.appointments[i].address.Street2,
+      //       ClientAddressArea: item.appointments[i].address.Area,
+      //       ClientAddressCity: item.appointments[i].address.City,
+      //       ClientAddressState: item.appointments[i].address.State,
+      //       ClientAddressCity: item.appointments[i].address.Pincode,
+      //       ClientAddressContactNo: item.appointments[i].address.ContactNo,
+      //       ClientAddressAltContactNo:
+      //         item.appointments[i].address.AltContactNo,
+      //     };
+      //   }
+      // });
+      let objFinal = filteredArray.map((item) => {
+        console.log(item.appointments.length);
+        for (let i = 0; i < item.appointments.length; i++) {
+            objFinal.ServiceProviderAppUserID= item.AppUserID;
+            objFinal.ServiceProviderID= item.id;
+            // ServiceID: item.serviceId,
+            // ServiceName: item.service.ServiceName,
+            //Appointments: item.appointments,
+            objFinal.AppointmentDate= item.appointments[i].AppointmentDate;
+            objFinal.ClientFirstName= item.appointments[i].appuser.FirstName;
+            objFinal.ClientLastName= item.appointments[i].appuser.LastName;
+            objFinal.ClientAddressDoorNo= item.appointments[i].address.DoorNo;
+            objFinal.ClientAddressStreet1= item.appointments[i].address.Street1;
+            // ClientAddressStreet2: item.appointments[i].address.Street2,
+            // ClientAddressArea: item.appointments[i].address.Area,
+            // ClientAddressCity: item.appointments[i].address.City,
+            // ClientAddressState: item.appointments[i].address.State,
+            // ClientAddressCity: item.appointments[i].address.Pincode,
+            // ClientAddressContactNo: item.appointments[i].address.ContactNo,
+            // ClientAddressAltContactNo:
+            //   item.appointments[i].address.AltContactNo,
+        }
 
-        objFinal[i].FirstName = objFinal[i].appuser.FirstName;
-        objFinal[i].LastName = objFinal[i].appuser.LastName;
-        objFinal[i].Age = objFinal[i].appuser.Age;
-        objFinal[i].Email = objFinal[i].appuser.Email;
-        delete objFinal[i].appuser;
-      }
+      });
+      console.log(objFinal);
       res.status(200).json({
         message: "Appointments extracted successfully",
-        addresses: objFinal,
+        Appointments: objFinal,
       });
     })
     .catch((error) => {
