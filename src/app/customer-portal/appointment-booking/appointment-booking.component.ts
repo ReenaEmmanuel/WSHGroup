@@ -30,10 +30,12 @@ export class AppointmentBookingComponent implements OnInit {
   totalTime : number;
   address : Address[] = [];
   addressId : any;
+  addressID : number;
+  paymentId :number;
 
   PaymentMethods : any[] =
-  [{"PaymentMode_ID" : 742001, "Mode" : "Online"},
-  {"PaymentMode_ID" : 742002, "Mode" : "Cash"},]
+  [{"PaymentMode_ID" : 1, "Mode" : "Online"},
+  {"PaymentMode_ID" : 2, "Mode" : "Cash"},]
 
   constructor(private formBuilder: FormBuilder,private dataservice: ServicesListService, private service: customerPortalService, private router: Router) {
 
@@ -52,6 +54,8 @@ export class AppointmentBookingComponent implements OnInit {
         'ServiceProviderID': new FormControl(null, Validators.required),
         'AppointmentDate': new FormControl(null, Validators.required),
         'Time' : new FormControl(null, Validators.required),
+        'AddressID' : new FormControl(null, Validators.required),
+        'PaymentID' : new FormControl(null, Validators.required),
       });
 
     this.service.getAddresses(this.userid).subscribe(res => {
@@ -93,7 +97,7 @@ export class AppointmentBookingComponent implements OnInit {
     console.log(this.form);
     this.totalTime = +this.form.value.Time;
     this.totalPrice = this.totalTime * this.pricePerHour;
-    this.service.createAppointment(+this.userid,this.form.value.ServiceProviderID, this.form.value.AppointmentDate, this.totalPrice);
+    this.service.createAppointment(+this.userid,this.form.value.ServiceProviderID, this.form.value.AppointmentDate, this.totalPrice, this.form.value.PaymentID);
     this.router.navigate(['/userhomepage']);
   }
 
