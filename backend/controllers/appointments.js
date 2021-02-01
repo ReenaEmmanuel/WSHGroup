@@ -88,6 +88,7 @@ exports.getAppointmentList = function (req, res) {
         model: Appointment,
         required: true,
         attributes: [
+          "id",
           "AppUserID",
           "AppointmentDate",
           "Status",
@@ -117,17 +118,28 @@ exports.getAppointmentList = function (req, res) {
         delete objJson[i].service;
         console.log(objJson[i].appointments.length);
         for (let j = 0; j < objJson[i].appointments.length; j++) {
-          objJson[i].appointments[j].ClientFirstName = objJson[i].appointments[j].appuser.FirstName;
-          objJson[i].appointments[j].ClientLastName = objJson[i].appointments[j].appuser.LastName;
-          objJson[i].appointments[j].ClientAddressDoorNo = objJson[i].appointments[j].address.DoorNo;
-          objJson[i].appointments[j].ClientAddressStreet1 = objJson[i].appointments[j].address.Street1;
-          objJson[i].appointments[j].ClientAddressStreet2 = objJson[i].appointments[j].address.Street2;
-          objJson[i].appointments[j].ClientAddressArea = objJson[i].appointments[j].address.Area;
-          objJson[i].appointments[j].ClientAddressCity = objJson[i].appointments[j].address.City;
-          objJson[i].appointments[j].ClientAddressState = objJson[i].appointments[j].address.State;
-          objJson[i].appointments[j].ClientAddressCity = objJson[i].appointments[j].address.Pincode;
-          objJson[i].appointments[j].ClientAddressContactNo = objJson[i].appointments[j].address.ContactNo;
-          objJson[i].appointments[j].ClientAddressAltContactNo = objJson[i].appointments[j].address.AltContactNo;
+          objJson[i].appointments[j].ClientFirstName =
+            objJson[i].appointments[j].appuser.FirstName;
+          objJson[i].appointments[j].ClientLastName =
+            objJson[i].appointments[j].appuser.LastName;
+          objJson[i].appointments[j].ClientAddressDoorNo =
+            objJson[i].appointments[j].address.DoorNo;
+          objJson[i].appointments[j].ClientAddressStreet1 =
+            objJson[i].appointments[j].address.Street1;
+          objJson[i].appointments[j].ClientAddressStreet2 =
+            objJson[i].appointments[j].address.Street2;
+          objJson[i].appointments[j].ClientAddressArea =
+            objJson[i].appointments[j].address.Area;
+          objJson[i].appointments[j].ClientAddressCity =
+            objJson[i].appointments[j].address.City;
+          objJson[i].appointments[j].ClientAddressState =
+            objJson[i].appointments[j].address.State;
+          objJson[i].appointments[j].ClientAddressCity =
+            objJson[i].appointments[j].address.Pincode;
+          objJson[i].appointments[j].ClientAddressContactNo =
+            objJson[i].appointments[j].address.ContactNo;
+          objJson[i].appointments[j].ClientAddressAltContactNo =
+            objJson[i].appointments[j].address.AltContactNo;
           delete objJson[i].appointments[j].address;
           delete objJson[i].appointments[j].appuser;
         }
@@ -135,30 +147,6 @@ exports.getAppointmentList = function (req, res) {
       // let filteredArray = objJson.filter(
       //   (item) => item.appointments.length > 0
       // );
-      /*let objFinal = objJson.map((item) => {
-        console.log(item.appointments.length);
-        return {
-          ServiceProviderAppUserID: item.AppUserID,
-          ServiceProviderID: item.id,
-          ServiceID: item.serviceId,
-          ServiceName: item.service.ServiceName,
-          Appointments: item.appointments,
-          //       AppointmentDate: item.appointments[i].AppointmentDate,
-          //       ClientFirstName: item.appointments[i].appuser.FirstName,
-          //       ClientLastName: item.appointments[i].appuser.LastName,
-          //       ClientAddressDoorNo: item.appointments[i].address.DoorNo,
-          //       ClientAddressStreet1: item.appointments[i].address.Street1,
-          //       ClientAddressStreet2: item.appointments[i].address.Street2,
-          //       ClientAddressArea: item.appointments[i].address.Area,
-          //       ClientAddressCity: item.appointments[i].address.City,
-          //       ClientAddressState: item.appointments[i].address.State,
-          //       ClientAddressCity: item.appointments[i].address.Pincode,
-          //       ClientAddressContactNo: item.appointments[i].address.ContactNo,
-          //       ClientAddressAltContactNo:
-          //         item.appointments[i].address.AltContactNo,
-        };
-      });*/
-
       res.status(200).json({
         message: "Appointments extracted successfully",
         Appointments: objJson,
@@ -183,6 +171,99 @@ exports.closeAppointment = (req, res) => {
     .then((newpost) => {
       res.status(201).json({
         message: "Appointment updated successfully",
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: error,
+      });
+    });
+};
+
+exports.getUserAppointmentList = function (req, res) {
+  const appUserId = +req.params.id;
+  User.findAll({
+    attributes: ["id", "FirstName", "LastName"],
+    where: { id: appUserId },
+    include: [
+      {
+        model: Appointment,
+        required: true,
+        attributes: [
+          "id",
+          "AppUserID",
+          "AppointmentDate",
+          "Status",
+          "PaymentMode",
+          "TotalCost",
+          "IsPaid",
+        ],
+        include: [
+          {
+            model: Address,
+            required: true,
+          },
+          {
+            model: ServiceProvider,
+            required: true,
+            //attributes: ["FirstName", "LastName"],
+            include: [
+              {
+                model: User,
+                required: true,
+                attributes: ["FirstName", "LastName"],
+              },
+              {
+                model: Service,
+                required: true,
+                attributes: ["id", "ServiceName", "PricePerHour"],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  })
+    .then((result) => {
+      objJson = JSON.parse(JSON.stringify(result));
+      for (let i = 0; i < objJson.length; i++) {
+        for (let j = 0; j < objJson[i].appointments.length; j++) {
+          objJson[i].appointments[j].SpFirstName =
+            objJson[i].appointments[j].serviceprovider.appuser.FirstName;
+          objJson[i].appointments[j].SpLastName =
+            objJson[i].appointments[j].serviceprovider.appuser.LastName;
+          objJson[i].appointments[j].ServiceName =
+            objJson[i].appointments[j].serviceprovider.service.ServiceName;
+          objJson[i].appointments[j].PricePerHour =
+            objJson[i].appointments[j].serviceprovider.service.PricePerHour;
+          delete objJson[i].appointments[j].serviceprovider;
+
+          objJson[i].appointments[j].ClientAddressDoorNo =
+            objJson[i].appointments[j].address.DoorNo;
+          objJson[i].appointments[j].ClientAddressStreet1 =
+            objJson[i].appointments[j].address.Street1;
+          objJson[i].appointments[j].ClientAddressStreet2 =
+            objJson[i].appointments[j].address.Street2;
+          objJson[i].appointments[j].ClientAddressArea =
+            objJson[i].appointments[j].address.Area;
+          objJson[i].appointments[j].ClientAddressCity =
+            objJson[i].appointments[j].address.City;
+          objJson[i].appointments[j].ClientAddressState =
+            objJson[i].appointments[j].address.State;
+          objJson[i].appointments[j].ClientAddressCity =
+            objJson[i].appointments[j].address.Pincode;
+          objJson[i].appointments[j].ClientAddressContactNo =
+            objJson[i].appointments[j].address.ContactNo;
+          objJson[i].appointments[j].ClientAddressAltContactNo =
+            objJson[i].appointments[j].address.AltContactNo;
+          delete objJson[i].appointments[j].address;
+        }
+      }
+
+      res.status(200).json({
+        message: "Appointments extracted successfully",
+        Appointments: objJson,
       });
     })
     .catch((error) => {
