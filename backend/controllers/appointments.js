@@ -24,45 +24,72 @@ exports.getSpList = function (req, res) {
           attributes: ["PricePerHour"],
         },
       },
-      {
-        model: Appointment,
-        attributes: ["AppointmentDate", "AddressID"],
-        // where: {
-        //   AppointmentDate:
-        //   {
-        //     [sequelize.Op.not]: '2021-01-20'
-        //   },
-        // $or:
-        //   {
-        //     AppointmentDate: null
-        //     //   {
-        //     //       $eq: null
-        //     //   }
-        //   },
-        // }
-      },
+      // {
+      //   model: Appointment,
+      //   attributes: ["AppointmentDate", "AddressID"],
+      //   // where: {
+      //   //   AppointmentDate: '2021-01-20',
+      //   // },
+      //   // $and:[{
+      //   //   AppointmentDate: '2021-01-19',
+      //   //   where: sequelize.where(
+      //   //       sequelize.col("appointments.AppointmentDate"),
+      //   //       "IS",
+      //   //       null // working code
+      //   //     ),
+      //   // },
+      //   // ]
+      //   //   where: {
+      //   //     $or: [
+      //   //       {
+      //   //         AppointmentDate: '2021-01-20',
+      //   //       },
+      //   //       {
+      //   //         AppointmentDate: null,
+
+      //   //       },
+      //   //     ],
+      //   //   },  -- not working
+      // },
     ],
+    // where:{where: sequelize.where(
+    //   sequelize.col("appointments.AppointmentDate"),
+    //   "IS",
+    //   null // working code
+    // ),
+    // $or: {AppointmentDate: '2021-01-22'}
+    // },
   })
     .then((result) => {
       let objJson = JSON.parse(JSON.stringify(result));
-      let filteredArray = objJson.filter(
-        (item) => item.appointments.length === 0
-      );
-      // filteredArray = objJson.filter(
-      //   (item) => item.appointments.length > 0 &&
-      // );
-
-      let objFinal = filteredArray.map((item) => {
+      let objFinal = objJson.map((item) => {
         return {
           FirstName: item.FirstName,
           LastName: item.LastName,
+          AppUserID: item.serviceprovider.AppUserID,
+          ServiceProviderID: item.serviceprovider.id,
+          ServiceID: item.serviceprovider.ServiceID,
           PricePerHour: item.serviceprovider.service.PricePerHour,
         };
       });
+      // let filteredArray = objJson.filter(
+      //   (item) => item.appointments.length === 0
+      // );
+      // // filteredArray = objJson.filter(
+      // //   (item) => item.appointments.length > 0 &&
+      // // );
+
+      // let objFinal = filteredArray.map((item) => {
+      //   return {
+      //     FirstName: item.FirstName,
+      //     LastName: item.LastName,
+      //     PricePerHour: item.serviceprovider.service.PricePerHour,
+      //   };
+      // });
 
       res.status(200).json({
         message: "Service Providers extracted successfully",
-        serviceProvider: result,
+        serviceProvider: objFinal,
       });
     })
     .catch((error) => {
