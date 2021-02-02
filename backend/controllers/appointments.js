@@ -18,6 +18,7 @@ exports.getSpList = function (req, res) {
         attributes: ["id", "ServiceID", "AppUserID"],
         where: {
           ServiceID: serviceId,
+          IsActive: true
         },
         include: {
           model: Service,

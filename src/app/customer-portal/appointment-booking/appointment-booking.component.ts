@@ -34,6 +34,7 @@ export class AppointmentBookingComponent implements OnInit {
   addressId : any;
   addressID : number;
   paymentId :number;
+  numberOfSP = 0;
 
   PaymentMethods : any[] =
   [{"PaymentMode_ID" : 1, "Mode" : "Online"},
@@ -63,7 +64,6 @@ export class AppointmentBookingComponent implements OnInit {
 
     this.service.getAddresses(this.userid).subscribe(res => {
       this.address= res.addresses;
-      console.log(res);
     });
 
   }
@@ -75,26 +75,16 @@ export class AppointmentBookingComponent implements OnInit {
       this.selectedServiceID = serviceId;
       this.service.getServicesProviderListForEachService(serviceId)
         .subscribe( res => {
-          console.log(res);
           this.serviceProviders = res.serviceProvider;
-          //this.calculatePricePerHour();
+          this.numberOfSP = this.serviceProviders.length;
         });
-    }
+      }
   }
-
-  // calculatePricePerHour(){
-  //   if(this.serviceProviders){
-  //     this.pricePerHour = this.serviceProviders[0].serviceprovider.service.PricePerHour;
-  //     console.log(this.pricePerHour);
-  //   }
-  // }
 
   onServiceProviderSelection(serviceProviderId : any)
   {
     if(this.serviceProviderID){
-      console.log(serviceProviderId);
       this.pricePerHour = this.serviceProviders[0].PricePerHour;
-      console.log(this.pricePerHour);
     }
   }
 
@@ -112,7 +102,4 @@ export class AppointmentBookingComponent implements OnInit {
     this.router.navigate(['/userhomepage']);
   }
 
-  getAddressid(a: any){
-    console.log(a);
-  }
 }
