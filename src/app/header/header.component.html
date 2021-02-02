@@ -1,6 +1,8 @@
 <mat-toolbar>
   <span>
-    <a routerLink="./userhomepage"><img src="../../assets/logo.png" class="logo"></a>
+    <a routerLink="/userlist" *ngIf="UsrRole==0"><img src="../../assets/logo.png" class="logo"></a>
+    <a routerLink="/registeredservices" *ngIf="UsrRole==1"><img src="../../assets/logo.png" class="logo"></a>
+    <a routerLink="/userhomepage" *ngIf="UsrRole==2"><img src="../../assets/logo.png" class="logo"></a>
   </span>
   <span class="spacer"></span>
   <ul>

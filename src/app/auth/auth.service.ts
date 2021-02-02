@@ -78,10 +78,19 @@ export class AuthService {
             const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
             console.log(expirationDate);
             this.saveAuthData(token, expirationDate, this.UserId, this.UsrRole);
-            if(this.UsrRole==2)
+            if(this.UsrRole==0)
+            this.router.navigate(["/userlist"]);
+            else if(this.UsrRole==1)
+            this.router.navigate(["/registeredservices"]);
+            else if(this.UsrRole==2)
             this.router.navigate(["/userhomepage"]);
-            else
-            this.router.navigate(["/"]);
+            else{
+              this.snackBar.open("This user is not a part of this application", 'OK', {
+                duration: environment.snackBarTime,
+              })
+              this.router.navigate(["/login"]);
+            }
+            
           }
         }
         else {
