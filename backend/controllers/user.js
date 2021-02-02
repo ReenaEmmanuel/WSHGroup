@@ -322,3 +322,18 @@ exports.getAddressList = function (req, res) {
     });
 };
 
+exports.deleteAddress = function (req, res) {
+  Address.destroy({ where: { id: req.params.AddressId } })
+    .then(function (rowsDeleted) {
+      if (rowsDeleted == 1) {
+        console.log("Address deleted successfully");
+      }
+      res.json(rowsDeleted);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: error,
+      });
+    });
+};
