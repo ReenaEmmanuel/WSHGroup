@@ -10,6 +10,7 @@ exports.getSpList = function (req, res) {
   // const appointmentDate = +req.params.date;
   User.findAll({
     attributes: ["id", "FirstName", "LastName"],
+    where: { IsActive: true },
     include: [
       {
         model: ServiceProvider,

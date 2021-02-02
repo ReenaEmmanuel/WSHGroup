@@ -1,23 +1,25 @@
 const Service = require("../models/dbSchema").serviceSchema;
 
-exports.addNewService = (req, res) => {
-  Service.create({
-    PricePerHour: req.body.PricePerHour,
-    ServiceName: req.body.ServiceName,
-    IsActive: true,
-  })
-    .then((newpost) => {
-      res.status(201).json({
-        message: "Service added successfully",
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).json({
-        message: error,
-      });
-    });
-};
+
+// exports.addNewService = (req, res) => {
+//   Service.create({
+//     PricePerHour: req.body.PricePerHour,
+//     ServiceName: req.body.ServiceName,
+//     image: req.body.image,
+//     IsActive: true,
+//   })
+//     .then((newpost) => {
+//       res.status(201).json({
+//         message: "Service added successfully",
+//       });
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//       res.status(500).json({
+//         message: error,
+//       });
+//     });
+// };
 
 exports.updateService = function (req, res) {
   Service.update(
@@ -65,6 +67,7 @@ exports.getList = function (req, res) {
   Service.findAndCountAll({
     limit: pageSize,
     offset: pageSize * (currentPage - 1),
+    where: { IsActive: true }
   })
     .then((result) => {
       res

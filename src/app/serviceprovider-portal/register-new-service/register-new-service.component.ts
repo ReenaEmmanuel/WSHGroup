@@ -35,6 +35,6 @@ export class RegisterNewServiceComponent implements OnInit {
   onSubmit(){
 
     this.service.createServiceProvider(+this.userid,this.form.value.ServiceID);
-    this.router.navigate(['/registeredservices']);
+
   }
 }

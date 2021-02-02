@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Address } from 'src/app/models/address.model';
+import { environment } from 'src/environments/environment';
 import { customerPortalService } from '../customer-portal.service';
 
 @Component({
@@ -11,13 +13,21 @@ import { customerPortalService } from '../customer-portal.service';
 })
 export class AddNewAddressComponent implements OnInit {
 
+  displayedColumns: string[] = ['Address', 'Cancel',];
   addressForm : FormGroup;
+  address : Address[] = [];
+  userid : any;
 
-  userid : string;
-
-  constructor(public dataService: customerPortalService, private router:Router ) { }
+  constructor(public dataService: customerPortalService, private router:Router, private snackBar: MatSnackBar ) { }
 
   ngOnInit(): void {
+    this.userid = sessionStorage.getItem("UserID");
+
+    this.dataService.getAddresses(this.userid).subscribe(res => {
+      this.address= res.addresses;
+      console.log(this.address);
+    });
+
     this.addressForm = new FormGroup({
       'Door': new FormControl(null, Validators.required),
       'Street1': new FormControl(null, Validators.required),
@@ -29,7 +39,6 @@ export class AddNewAddressComponent implements OnInit {
       'Contact': new FormControl(null, [Validators.required, Validators.pattern('[6-9]\\d{9}')]),
       'AlternateContact': new FormControl(null, [ Validators.pattern('[6-9]\\d{9}')]),
   });
-  this.userid = sessionStorage.getItem("UserID");
   }
   onSubmit(){
     if(this.addressForm.valid){
@@ -45,9 +54,11 @@ export class AddNewAddressComponent implements OnInit {
         this.addressForm.value.AlternateContact);
         this.router.navigate(["/userhomepage"])
       }
-
-
-
+    else{
+      this.snackBar.open("Please enter all details", 'OK', {
+        duration: environment.snackBarTime,
+      });
+    }
 }
 
 }

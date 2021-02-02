@@ -43,7 +43,7 @@ export class AddnewserviceComponent implements OnInit{
           this.form.value.image
         );
       this.form.reset();
-      this.router.navigate(["/servicelist"]);
+      
     }
 
     onImagePicked(event: Event) {

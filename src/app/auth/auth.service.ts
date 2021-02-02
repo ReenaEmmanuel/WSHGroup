@@ -17,6 +17,7 @@ export class AuthService {
   private UserId: any;
   private UsrRole: any;
   url = environment.apiUrl + "user/";
+  isActive : boolean;
 
   constructor( private http:HttpClient, private router: Router, private snackBar: MatSnackBar) {}
 
@@ -57,29 +58,38 @@ export class AuthService {
 
   login(Email: string, UsrPwd: string) {
     const authData: LoginData = { Email: Email, UsrPwd: UsrPwd };
-    this.http.post<{ token: string; expiresIn: number, UserId: string, UsrRole: number }>(
+    this.http.post<{ token: string; expiresIn: number, UserId: string, UsrRole: number, IsActive: boolean }>(
         this.url+"login",
         authData
       )
       .subscribe(response => {
         const token = response.token;
+        this.isActive = response.IsActive;
         this.token = token;
-        if (token) {
-          const expiresInDuration = response.expiresIn;
-          this.setAuthTimer(expiresInDuration);
-          this.isAuthenticated = true;
-          this.UserId = response.UserId;
-          this.UsrRole = response.UsrRole;
-          this.authStatusListener.next(true);
-          const now = new Date();
-          const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-          console.log(expirationDate);
-          this.saveAuthData(token, expirationDate, this.UserId, this.UsrRole);
-          if(this.UsrRole==2)
-          this.router.navigate(["/userhomepage"]);
-          else
-          this.router.navigate(["/"]);
+        if(this.isActive){
+          if (token) {
+            const expiresInDuration = response.expiresIn;
+            this.setAuthTimer(expiresInDuration);
+            this.isAuthenticated = true;
+            this.UserId = response.UserId;
+            this.UsrRole = response.UsrRole;
+            this.authStatusListener.next(true);
+            const now = new Date();
+            const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+            console.log(expirationDate);
+            this.saveAuthData(token, expirationDate, this.UserId, this.UsrRole);
+            if(this.UsrRole==2)
+            this.router.navigate(["/userhomepage"]);
+            else
+            this.router.navigate(["/"]);
+          }
         }
+        else {
+          this.snackBar.open("The User has been Deactivated! Please Contact Admin", 'OK', {
+            duration: environment.snackBarTime,
+          })
+        }
+        
       },
         error => {
           this.snackBar.open("Please enter valid credentials", 'OK', {

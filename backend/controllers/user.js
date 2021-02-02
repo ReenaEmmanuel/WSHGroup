@@ -40,6 +40,7 @@ exports.login = (req, res) => {
         expiresIn: 3600,
         UserId: fetchedUser.id,
         UsrRole: fetchedUser.UsrRole,
+        IsActive: fetchedUser.IsActive
       });
     })
     .catch((err) => {
@@ -150,15 +151,17 @@ exports.setUserActiveStatus = function (req, res) {
 
 exports.createAppointment = (req, res) => {
   Appointment.create({
-    AppUserID: req.body.UserID,
+    AppUserID: req.body.AppUserID,
     ServiceProviderID: req.body.ServiceProviderID,
     AppointmentDate: req.body.AppointmentDate,
     StartTime: req.body.StartTime,
     EndTime: req.body.EndTime,
+    TotalTime: req.body.TotalTime,
     Status: req.body.Status,
     PaymentMode: req.body.PaymentMode,
     TotalCost: req.body.TotalCost,
     IsPaid: req.body.IsPaid,
+    AddressID: req.body.AddressID
   })
     .then((newpost) => {
       res.status(201).json({

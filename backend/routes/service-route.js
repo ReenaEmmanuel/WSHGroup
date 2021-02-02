@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require("multer");
+const Service = require("../models/dbSchema").serviceSchema;
 
 const MIME_TYPE_MAP = {
   "image/png": "png",

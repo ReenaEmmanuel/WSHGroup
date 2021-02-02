@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NumberValueAccessor, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Address } from 'src/app/models/address.model';
 import { Services } from 'src/app/models/services.model';
 import { ServicesListService } from 'src/app/service/servicelist.service';
+import { environment } from 'src/environments/environment';
 import { customerPortalService } from '../customer-portal.service';
 
 @Component({
@@ -37,12 +39,13 @@ export class AppointmentBookingComponent implements OnInit {
   [{"PaymentMode_ID" : 1, "Mode" : "Online"},
   {"PaymentMode_ID" : 2, "Mode" : "Cash"},]
 
-  constructor(private formBuilder: FormBuilder,private dataservice: ServicesListService, private service: customerPortalService, private router: Router) {
+  constructor(private formBuilder: FormBuilder,private dataservice: ServicesListService, private service: customerPortalService, private router: Router, private snackBar: MatSnackBar) {
 
   }
 
   ngOnInit(): void {
     this.userid = sessionStorage.getItem("UserID");
+    console.log(this.userid);
 
     this.dataservice.getServicesList(100,1)
       .subscribe(res => {
@@ -72,32 +75,40 @@ export class AppointmentBookingComponent implements OnInit {
       this.selectedServiceID = serviceId;
       this.service.getServicesProviderListForEachService(serviceId)
         .subscribe( res => {
-          this.serviceProviders = res.users;
-          console.log(this.serviceProviders);
+          console.log(res);
+          this.serviceProviders = res.serviceProvider;
           //this.calculatePricePerHour();
         });
     }
   }
 
-  calculatePricePerHour(){
-    if(this.serviceProviders){
-      this.pricePerHour = this.serviceProviders[0].serviceprovider.service.PricePerHour;
-      console.log(this.pricePerHour);
-    }
-  }
+  // calculatePricePerHour(){
+  //   if(this.serviceProviders){
+  //     this.pricePerHour = this.serviceProviders[0].serviceprovider.service.PricePerHour;
+  //     console.log(this.pricePerHour);
+  //   }
+  // }
 
   onServiceProviderSelection(serviceProviderId : any)
   {
     if(this.serviceProviderID){
       console.log(serviceProviderId);
+      this.pricePerHour = this.serviceProviders[0].PricePerHour;
+      console.log(this.pricePerHour);
     }
   }
 
   onSubmit(){
+    if(!this.form.valid){
+      this.snackBar.open("Please enter all details", 'OK', {
+        duration: environment.snackBarTime,
+      });
+      return;
+    }
     console.log(this.form);
     this.totalTime = +this.form.value.Time;
     this.totalPrice = this.totalTime * this.pricePerHour;
-    this.service.createAppointment(+this.userid,this.form.value.ServiceProviderID, this.form.value.AppointmentDate, this.totalPrice, this.form.value.PaymentID);
+    this.service.createAppointment(+this.userid,this.form.value.ServiceProviderID, this.form.value.AppointmentDate, this.totalTime, this.totalPrice, this.form.value.PaymentID, this.addressID);
     this.router.navigate(['/userhomepage']);
   }
 

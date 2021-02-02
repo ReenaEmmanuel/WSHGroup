@@ -18,7 +18,7 @@ export class customerPortalService {
 
   getServicesProviderListForEachService(id: number) {
     // const dateString = date.toISOString();
-    return this.http.get<{message: string; users:any}>( this.appointmenturl + "getSpList/"+ id);
+    return this.http.get<{message: string; serviceProvider:any}>( this.appointmenturl + "getSpList/"+ id);
   }
 
   getPrice(id: number) {
@@ -55,8 +55,8 @@ export class customerPortalService {
       });
   }
 
-  createAppointment(AppUserID: number, ServiceProviderID: number, AppointmentDate: any, totalCost : number, paymentId : number){
-    const appointment: Appointments = { AppUserID: AppUserID, ServiceProviderID: ServiceProviderID, AppointmentDate: AppointmentDate, StartTime: null, EndTime: null, Status: 1, PaymentMode: paymentId, TotalCost: totalCost, IsPaid: 1 };
+  createAppointment(AppUserID: number, ServiceProviderID: number, AppointmentDate: any, TotalTime:number, totalCost : number, paymentId : number, addressID: number){
+    const appointment: Appointments = { AppUserID: AppUserID, ServiceProviderID: ServiceProviderID, AppointmentDate: AppointmentDate, StartTime: null, EndTime: null, TotalTime: TotalTime, Status: 1, PaymentMode: paymentId, TotalCost: totalCost, IsPaid: 1, AddressID: addressID };
     this.http
     .post(this.userurl+"createAppointment", appointment)
     .subscribe(response => {

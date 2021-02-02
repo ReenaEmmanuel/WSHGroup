@@ -19,7 +19,7 @@
       <mat-form-field class="example-full-width">
         <mat-label>Select Service Provider</mat-label>
         <mat-select [(ngModel)]="serviceProviderID" formControlName="ServiceProviderID" (ngModelChange)="onServiceProviderSelection(serviceProviderID)" required>Select Service Provider
-          <mat-option *ngFor="let serviceProvider of serviceProviders" value="{{serviceProvider.id}}">{{serviceProvider.FirstName}} {{serviceProvider.LastName}}</mat-option>
+          <mat-option *ngFor="let serviceProvider of serviceProviders" value="{{serviceProvider.ServiceProviderID}}">{{serviceProvider.FirstName}} {{serviceProvider.LastName}}</mat-option>
         </mat-select>
       </mat-form-field>
     </td>
@@ -44,7 +44,7 @@
     <td>
       <mat-form-field class="example-full-width">
         <mat-label>Select Address</mat-label>
-        <mat-select [(ngModel)]="addressID" class="address-select" formControlName="AddressID" (ngModelChange)="getAddressid(addressId)" required>Select Address
+        <mat-select [(ngModel)]="addressID" class="address-select" formControlName="AddressID" (ngModelChange)="getAddressid(addressID)" required>Select Address
           <mat-option *ngFor="let a of address" value="{{a.id}}" class="mat-option-address">
             {{a.DoorNo}}, {{a.Street1}}, {{a.Street2}},<br> {{a.Area}}, {{a.City}}, {{a.State}},{{a.Pincode}},<br>{{a.ContactNo}},{{a.AltContactNo}}
           </mat-option>

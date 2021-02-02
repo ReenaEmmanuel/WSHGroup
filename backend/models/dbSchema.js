@@ -59,6 +59,7 @@ const appointmentSchema = con.define("appointments", {
   AppointmentDate: { type: sequelize.DATEONLY },
   StartTime: { type: sequelize.TIME },
   EndTime: { type: sequelize.TIME },
+  TotalTime: { type: sequelize.INTEGER },
   Status: { type: sequelize.ENUM, values: [ 'In Progress', 'Closed', 'Cancelled'] },
   PaymentMode: { type: sequelize.ENUM, values: ['Online', 'Direct'] },
   TotalCost: { type: sequelize.DECIMAL(10, 2) },

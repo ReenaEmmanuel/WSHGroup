@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 import { serviceProvider } from "../models/serviceProvider.model";
 import { User } from "../models/user.model";
@@ -11,7 +12,7 @@ export class SpPortalService {
   url = environment.apiUrl + "serviceProvider/";
   appointmenturl = environment.apiUrl + "appointment/";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   getServiceList(serviceId: number) {
     return this.http.get<{result: any}>(this.url+"getRegServiceList/" + serviceId);
@@ -37,6 +38,7 @@ export class SpPortalService {
     .post(this.url+"registerNew", serviceProvider)
     .subscribe(response => {
       console.log(response);
+      this.router.navigate(['/registeredservices']);
     },
     error => {
       console.log(error);
