@@ -7,7 +7,7 @@ const sequelize = require("sequelize");
 
 exports.getSpList = function (req, res) {
   const serviceId = +req.params.id;
-  const appointmentDate = +req.params.date;
+  // const appointmentDate = +req.params.date;
   User.findAll({
     attributes: ["id", "FirstName", "LastName"],
     include: [
@@ -118,28 +118,18 @@ exports.getAppointmentList = function (req, res) {
         delete objJson[i].service;
         console.log(objJson[i].appointments.length);
         for (let j = 0; j < objJson[i].appointments.length; j++) {
-          objJson[i].appointments[j].ClientFirstName =
-            objJson[i].appointments[j].appuser.FirstName;
-          objJson[i].appointments[j].ClientLastName =
-            objJson[i].appointments[j].appuser.LastName;
-          objJson[i].appointments[j].ClientAddressDoorNo =
-            objJson[i].appointments[j].address.DoorNo;
-          objJson[i].appointments[j].ClientAddressStreet1 =
-            objJson[i].appointments[j].address.Street1;
-          objJson[i].appointments[j].ClientAddressStreet2 =
-            objJson[i].appointments[j].address.Street2;
-          objJson[i].appointments[j].ClientAddressArea =
-            objJson[i].appointments[j].address.Area;
-          objJson[i].appointments[j].ClientAddressCity =
-            objJson[i].appointments[j].address.City;
-          objJson[i].appointments[j].ClientAddressState =
-            objJson[i].appointments[j].address.State;
-          objJson[i].appointments[j].ClientAddressCity =
-            objJson[i].appointments[j].address.Pincode;
-          objJson[i].appointments[j].ClientAddressContactNo =
-            objJson[i].appointments[j].address.ContactNo;
-          objJson[i].appointments[j].ClientAddressAltContactNo =
-            objJson[i].appointments[j].address.AltContactNo;
+          objJson[i].appointments[j].id = objJson[i].appointments[j].id;
+          objJson[i].appointments[j].ClientFirstName = objJson[i].appointments[j].appuser.FirstName;
+          objJson[i].appointments[j].ClientLastName = objJson[i].appointments[j].appuser.LastName;
+          objJson[i].appointments[j].ClientAddressDoorNo = objJson[i].appointments[j].address.DoorNo;
+          objJson[i].appointments[j].ClientAddressStreet1 = objJson[i].appointments[j].address.Street1;
+          objJson[i].appointments[j].ClientAddressStreet2 = objJson[i].appointments[j].address.Street2;
+          objJson[i].appointments[j].ClientAddressArea = objJson[i].appointments[j].address.Area;
+          objJson[i].appointments[j].ClientAddressCity = objJson[i].appointments[j].address.City;
+          objJson[i].appointments[j].ClientAddressState = objJson[i].appointments[j].address.State;
+          objJson[i].appointments[j].ClientAddressCity = objJson[i].appointments[j].address.Pincode;
+          objJson[i].appointments[j].ClientAddressContactNo = objJson[i].appointments[j].address.ContactNo;
+          objJson[i].appointments[j].ClientAddressAltContactNo = objJson[i].appointments[j].address.AltContactNo;
           delete objJson[i].appointments[j].address;
           delete objJson[i].appointments[j].appuser;
         }
@@ -164,7 +154,28 @@ exports.getAppointmentList = function (req, res) {
 exports.closeAppointment = (req, res) => {
   Appointment.update(
     {
-      Status: 4,
+      Status: 2,
+    },
+    { where: { id: req.params.AppointmentId } }
+  )
+    .then((newpost) => {
+      res.status(201).json({
+        message: "Appointment updated successfully",
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: error,
+      });
+    });
+};
+
+//Cancel Appointment
+exports.cancelAppointment = (req, res) => {
+  Appointment.update(
+    {
+      Status: 3,
     },
     { where: { id: req.params.AppointmentId } }
   )

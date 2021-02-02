@@ -9,6 +9,7 @@ import { User } from "../models/user.model";
 export class SpPortalService {
 
   url = environment.apiUrl + "serviceProvider/";
+  appointmenturl = environment.apiUrl + "appointment/";
 
   constructor(private http: HttpClient) { }
 
@@ -16,6 +17,15 @@ export class SpPortalService {
     return this.http.get<{result: any}>(this.url+"getRegServiceList/" + serviceId);
   }
 
+  getAppointmentList(spId: number) {
+    return this.http.get<{Appointments: any}>(this.appointmenturl+"getAppointmentList/" + spId);
+  }
+
+  closeAppointment(appointmentId : number) {
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };
+    return this.http.put<any>(this.appointmenturl+"closeAppointment/"+appointmentId,httpOptions);
+  }
+  
   unregister(id: string) {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };
     return this.http.put<any>(this.url+"setSpsActiveStatus/"+id,httpOptions);

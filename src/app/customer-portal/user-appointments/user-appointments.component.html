@@ -5,37 +5,19 @@
 
 <div style="overflow-x:auto;">
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" >
-
-  <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
-
-  <!-- Position Column -->
-  <ng-container matColumnDef="AppUserID">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> User ID </th>
-    <td mat-cell *matCellDef="let element"> {{element.AppUserID}} </td>
-  </ng-container>
-
-  <!-- Name Column -->
-  <ng-container matColumnDef="ServiceProviderID">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Service Provider ID </th>
-    <td mat-cell *matCellDef="let element"> {{element.ServiceProviderID}} </td>
-  </ng-container>
-
-  <!-- Weight Column -->
-  <ng-container matColumnDef="AppointmentDate">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Appointment Date </th>
+  <ng-container matColumnDef="Date">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
     <td mat-cell *matCellDef="let element"> {{element.AppointmentDate}} </td>
   </ng-container>
 
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="Status">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-    <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
+  <ng-container matColumnDef="ServiceName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Service Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.ServiceName}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="PaymentMode">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment Mode </th>
-    <td mat-cell *matCellDef="let element"> {{element.PaymentMode}} </td>
+  <ng-container matColumnDef="ServiceProviderName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Service Provider Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.SpFirstName}} {{element.SpLastName}} </td>
   </ng-container>
 
   <ng-container matColumnDef="TotalCost">
@@ -43,25 +25,20 @@
     <td mat-cell *matCellDef="let element"> {{element.TotalCost}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="IsPaid">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> IsPaid </th>
-    <ng-container *matCellDef="let element">
-      <td mat-cell *ngIf="element.IsPaid == true"> Payment Successful </td>
-      <td mat-cell *ngIf="element.IsPaid == false"> Payment Unsuccessful </td>
-    </ng-container>
+  <ng-container matColumnDef="Status">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+    <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
   </ng-container>
 
-  <!-- <ng-container matColumnDef="Deactivate">
-    <th mat-header-cell *matHeaderCellDef> Activate/Deactivate </th>
+   <ng-container matColumnDef="Cancel">
+    <th mat-header-cell *matHeaderCellDef> Cancel Appointment </th>
     <td mat-cell *matCellDef="let element">
-      <a mat-raised-button color="warn" (click)="deactivate(element.id)"> Activate/Deactivate </a>
+      <a mat-raised-button color="warn" *ngIf="element.Status == 'Closed' || element.Status == 'Cancelled'" disabled> Cancel </a>
+      <a mat-raised-button color="warn" *ngIf="element.Status == 'In Progress'" (click)="cancel(element.id)"> Cancel </a>
     </td>
-  </ng-container> -->
+  </ng-container> 
 
  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 </div>
-
-<mat-paginator [length]="totalAppointments" [pageSize]="appointmentsPerPage" [pageSizeOptions]="[5, 10, 25, 100]" (page)="onChangedPage($event)"></mat-paginator>
-

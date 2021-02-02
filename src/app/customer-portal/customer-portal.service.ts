@@ -29,6 +29,19 @@ export class customerPortalService {
     return this.http.get<{message: string; addresses:Address[]}>( this.userurl + "getAddressList/"+ id);
   }
 
+  getUserAppointmentList(userId: number) {
+    return this.http.get<{Appointments: any}>(this.appointmenturl+"getUserAppointmentList/" + userId);
+  }
+
+  closeAppointment(appointmentId : number) {
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };
+    return this.http.put<any>(this.appointmenturl+"closeAppointment/"+appointmentId,httpOptions);
+  }
+
+  cancelAppointment(appointmentId : number) {
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };
+    return this.http.put<any>(this.appointmenturl+"cancelAppointment/"+appointmentId,httpOptions);
+  }
 
   postAddress(userid: number, Door: number,Street1: string,Street2: string,Area: string,City: string, State: string,Pincode: number,Contact: number,AlternateContact:number) {
     const address: any = { AppUserID:userid, DoorNo:Door, Street1:Street1, Street2:Street2, Area: Area, City: City, State:State, Pincode:Pincode, ContactNo:Contact, AltContactNo:AlternateContact };
@@ -52,11 +65,6 @@ export class customerPortalService {
     error => {
       console.log(error);
     });
-  }
-
-  getAppointmentList(appointmentsPerPage: number, currentPage: number, AppUserID: number) {
-    const queryParams = `?pagesize=${appointmentsPerPage}&page=${currentPage}`;
-    return this.http.get<{message: string; appointments:any; count: number}>(this.userurl+"getAppointmentList/" + AppUserID + queryParams);
   }
 
 }

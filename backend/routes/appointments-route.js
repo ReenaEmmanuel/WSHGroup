@@ -11,6 +11,9 @@ router.get("/getAppointmentList/:id", AppointmentController.getAppointmentList);
 //Close Appointment
 router.put("/closeAppointment/:AppointmentId", AppointmentController.closeAppointment);
 
+//Cancel Appointment
+router.put("/cancelAppointment/:AppointmentId", AppointmentController.cancelAppointment);
+
 //Get Appointment list for User Client
 router.get("/getUserAppointmentList/:id", AppointmentController.getUserAppointmentList);
 

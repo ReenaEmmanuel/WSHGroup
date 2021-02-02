@@ -15,6 +15,8 @@ import { AddNewAddressComponent } from './customer-portal/add-new-address/add-ne
 import { UserAppointmentsComponent } from './customer-portal/user-appointments/user-appointments.component';
 import { RegisteredServicesComponent } from './serviceprovider-portal/registered-services/registered-services.component';
 import { RegisterNewServiceComponent } from './serviceprovider-portal/register-new-service/register-new-service.component';
+import { SpAppointmentListComponent } from './serviceprovider-portal/sp-appointment-list/sp-appointment-list.component';
+
 
 const routes: Routes = [
   { path: "", component: HomeComponent, canActivate: [AuthGuard] },
@@ -30,7 +32,8 @@ const routes: Routes = [
   { path: "newaddress", component: AddNewAddressComponent, canActivate: [AuthGuard] },
   { path: "userappointments", component: UserAppointmentsComponent, canActivate: [AuthGuard] },
   { path: "registeredservices", component: RegisteredServicesComponent, canActivate: [AuthGuard] },
-  { path: "registernewservices", component: RegisterNewServiceComponent, canActivate: [AuthGuard] }
+  { path: "registernewservices", component: RegisterNewServiceComponent, canActivate: [AuthGuard] },
+  { path: "spappointments", component: SpAppointmentListComponent, canActivate: [AuthGuard] }
 
 ];
 
