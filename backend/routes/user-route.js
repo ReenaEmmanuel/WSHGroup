@@ -34,4 +34,4 @@ router.get("/getAddressList/:id", UserController.getAddressList);
 module.exports = router;
 
 //Delete Address
-router.put("/deleteAddress/:AddressId", ServiceController.deleteAddress);
+router.put("/deleteAddress/:AddressId", UserController.deleteAddress);

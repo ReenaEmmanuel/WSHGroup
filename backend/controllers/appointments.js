@@ -103,64 +103,96 @@ exports.getSpList = function (req, res) {
 
 exports.getAppointmentList = function (req, res) {
   const appUserId = +req.params.id;
-  ServiceProvider.findAll({
-    attributes: ["AppUserID", "ServiceID"],
-    where: { AppUserID: appUserId },
+  console.log(id);
+  Appointment.findAll({
+    attributes: [
+      "id",
+      "AppointmentDate",
+      "Status",
+      "TotalCost",
+      // sequelize.literal(
+      //   "(select ServiceName from wshgroup.services where wshgroup.services.id=wshgroup.appointments.ServiceID) ServiceName"
+      // ) ,
+    ],
+    where: {
+      ServiceProviderID: sequelize.literal(
+        "ServiceProviderID in (select id from wshgroup.serviceproviders where AppUserID=" +
+        appUserId +
+          ")"
+      ),
+    },
     include: [
       {
         model: Service,
         required: true,
-        attributes: ["ServiceName", "PricePerHour"],
+        attributes: ["ServiceName"],
       },
       {
-        model: Appointment,
+        model: Address,
         required: true,
-        attributes: [
-          "id",
-          "AppUserID",
-          "AppointmentDate",
-          "Status",
-          "PaymentMode",
-          "TotalCost",
-          "IsPaid",
-        ],
-        include: [
-          {
-            model: Address,
-            required: true,
-          },
-          {
-            model: User,
-            required: true,
-            attributes: ["FirstName", "LastName"],
-          },
-        ],
+      },
+      {
+        model: User,
+        required: true,
+        attributes: ["FirstName", "LastName"],
       },
     ],
   })
+    // ServiceProvider.findAll({
+    //   attributes: ["AppUserID", "ServiceID"],
+    //   where: { AppUserID: appUserId },
+    //   include: [
+    //     {
+    //       model: Service,
+    //       required: true,
+    //       attributes: ["ServiceName", "PricePerHour"],
+    //     },
+    //     {
+    //       model: Appointment,
+    //       required: true,
+    //       attributes: [
+    //         "id",
+    //         "AppUserID",
+    //         "AppointmentDate",
+    //         "Status",
+    //         "PaymentMode",
+    //         "TotalCost",
+    //         "IsPaid",
+    //       ],
+    //       include: [
+    //         {
+    //           model: Address,
+    //           required: true,
+    //         },
+    //         {
+    //           model: User,
+    //           required: true,
+    //           attributes: ["FirstName", "LastName"],
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // })
     .then((result) => {
       objJson = JSON.parse(JSON.stringify(result));
       for (let i = 0; i < objJson.length; i++) {
         objJson[i].ServiceName = objJson[i].service.ServiceName;
-        objJson[i].PricePerHour = objJson[i].service.PricePerHour;
         delete objJson[i].service;
-        console.log(objJson[i].appointments.length);
-        for (let j = 0; j < objJson[i].appointments.length; j++) {
-          objJson[i].appointments[j].id = objJson[i].appointments[j].id;
-          objJson[i].appointments[j].ClientFirstName = objJson[i].appointments[j].appuser.FirstName;
-          objJson[i].appointments[j].ClientLastName = objJson[i].appointments[j].appuser.LastName;
-          objJson[i].appointments[j].ClientAddressDoorNo = objJson[i].appointments[j].address.DoorNo;
-          objJson[i].appointments[j].ClientAddressStreet1 = objJson[i].appointments[j].address.Street1;
-          objJson[i].appointments[j].ClientAddressStreet2 = objJson[i].appointments[j].address.Street2;
-          objJson[i].appointments[j].ClientAddressArea = objJson[i].appointments[j].address.Area;
-          objJson[i].appointments[j].ClientAddressCity = objJson[i].appointments[j].address.City;
-          objJson[i].appointments[j].ClientAddressState = objJson[i].appointments[j].address.State;
-          objJson[i].appointments[j].ClientAddressCity = objJson[i].appointments[j].address.Pincode;
-          objJson[i].appointments[j].ClientAddressContactNo = objJson[i].appointments[j].address.ContactNo;
-          objJson[i].appointments[j].ClientAddressAltContactNo = objJson[i].appointments[j].address.AltContactNo;
-          delete objJson[i].appointments[j].address;
-          delete objJson[i].appointments[j].appuser;
-        }
+
+          objJson[i].ClientFirstName = objJson[i].appuser.FirstName;
+          objJson[i].ClientLastName = objJson[i].appuser.LastName;
+          objJson[i].ClientAddressDoorNo = objJson[i].address.DoorNo;
+          objJson[i].ClientAddressStreet1 = objJson[i].address.Street1;
+          objJson[i].ClientAddressStreet2 = objJson[i].address.Street2;
+          objJson[i].ClientAddressArea = objJson[i].address.Area;
+          objJson[i].ClientAddressCity = objJson[i].address.City;
+          objJson[i].ClientAddressState = objJson[i].address.State;
+          objJson[i].ClientAddressCity = objJson[i].address.Pincode;
+          objJson[i].ClientAddressContactNo = objJson[i].address.ContactNo;
+          objJson[i].ClientAddressAltContactNo = objJson[i].address.AltContactNo;
+          delete objJson[i].address;
+          delete objJson[i].appuser;
+
       }
       // let filteredArray = objJson.filter(
       //   (item) => item.appointments.length > 0

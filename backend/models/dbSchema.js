@@ -55,6 +55,7 @@ addressSchema.sync();
 
 const appointmentSchema = con.define("appointments", {
   AppUserID: { type: sequelize.INTEGER },
+  ServiceID: { type: sequelize.INTEGER },
   ServiceProviderID: { type: sequelize.INTEGER },
   AppointmentDate: { type: sequelize.DATEONLY },
   StartTime: { type: sequelize.TIME },
@@ -97,6 +98,9 @@ invoiceSchema.belongsTo(appointmentSchema);
 
 addressSchema.hasOne(appointmentSchema);
 appointmentSchema.belongsTo(addressSchema);
+
+serviceSchema.hasOne(appointmentSchema);
+appointmentSchema.belongsTo(serviceSchema);
 
 module.exports = {
   //con: con,
