@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 import { serviceProvider } from "../models/serviceProvider.model";
@@ -12,7 +13,7 @@ export class SpPortalService {
   url = environment.apiUrl + "serviceProvider/";
   appointmenturl = environment.apiUrl + "appointment/";
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) { }
 
   getServiceList(serviceId: number) {
     return this.http.get<{result: any}>(this.url+"getRegServiceList/" + serviceId);
@@ -26,7 +27,7 @@ export class SpPortalService {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };
     return this.http.put<any>(this.appointmenturl+"closeAppointment/"+appointmentId,httpOptions);
   }
-  
+
   unregister(id: string) {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };
     return this.http.put<any>(this.url+"setSpsActiveStatus/"+id,httpOptions);
@@ -39,6 +40,9 @@ export class SpPortalService {
     .subscribe(response => {
       console.log(response);
       this.router.navigate(['/registeredservices']);
+      this.snackBar.open("Service has been registered", 'OK', {
+        duration: environment.snackBarTime,
+      });
     },
     error => {
       console.log(error);

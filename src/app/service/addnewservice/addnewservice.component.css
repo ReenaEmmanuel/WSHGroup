@@ -3,6 +3,7 @@ mat-card {
   margin: auto;
   margin-top: 2%;
   width: 80%;
+  background-color: pink;
 }
 
 mat-form-field {

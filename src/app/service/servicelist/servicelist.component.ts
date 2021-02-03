@@ -61,26 +61,24 @@ export class ServicelistComponent implements OnInit  {
     console.log(element.id);
     this.dataservice.deactivateService(element.id).
     subscribe(res => {
-      console.log(res);
+      window.location.reload();
       if(element.IsActive == true){
-        this.snackBar.open("Service Provider has been deactivated", 'OK', {
+        this.snackBar.open("Service has been deactivated", 'OK', {
           duration: environment.snackBarTime,
         });
       }
       else{
-        this.snackBar.open("Service Provider has been Activated", 'OK', {
+        this.snackBar.open("Service has been Activated", 'OK', {
           duration: environment.snackBarTime,
         });
       }
-      window.location.reload();
     },
     error => {
-      this.snackBar.open("Cannot Deactivate User", 'OK', {
+      this.snackBar.open("Cannot Deactivate Service", 'OK', {
         duration: environment.snackBarTime,
       });
     });
   }
-
       onChangedPage(pageData: PageEvent) {
         this.currentPage = pageData.pageIndex +1;
         this.servicesPerPage = pageData.pageSize;
@@ -90,8 +88,6 @@ export class ServicelistComponent implements OnInit  {
         this.totalServices = res.count;
         this.dataSource = new MatTableDataSource(res.services);
         console.log(this.dataSource);
-        // this.dataSource.paginator = this.paginator;
-        // this.dataSource.sort = this.sort;
       });
       }
 

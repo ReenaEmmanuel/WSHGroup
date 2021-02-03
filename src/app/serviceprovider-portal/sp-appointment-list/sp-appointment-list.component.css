@@ -1,34 +1,36 @@
 table {
     width: 90%;
     margin: auto;
+    background-color: pink;
   }
-  
+
   .mat-paginator {
     width: 90%;
     margin: auto;
+    background-color: pink;
   }
-  
+
   .mat-form-field {
     font-size: 14px;
     width: 88%;
     margin-top: 4%;
     margin-left: 5%;
-    background-color: white;
+    background-color: pink;
     padding: 1%;
   }
-  
+
   /* On screens that are 992px or less, set the background color to blue */
   @media screen and (max-width: 992px) {
     table {
       width: 90%;
       margin: auto;
     }
-  
+
     .mat-paginator {
       width: 90%;
       margin: auto;
     }
-  
+
     .mat-form-field {
       font-size: 14px;
       width: 88%;
@@ -38,19 +40,19 @@ table {
       padding: 1%;
     }
   }
-  
+
   /* On screens that are 600px or less, set the background color to olive */
   @media screen and (max-width: 450px) {
     table {
       width: 90%;
       margin: auto;
     }
-  
+
     .mat-paginator {
       width: 90%;
       margin: auto;
     }
-  
+
     .mat-form-field {
       font-size: 14px;
       width: 90%;
@@ -60,4 +62,3 @@ table {
       padding: 1%;
     }
   }
-  

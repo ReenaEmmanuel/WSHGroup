@@ -52,13 +52,25 @@ export class AddNewAddressComponent implements OnInit {
         this.addressForm.value.Pincode,
         this.addressForm.value.Contact,
         this.addressForm.value.AlternateContact);
-        this.router.navigate(["/userhomepage"])
+        this.router.navigate(["/userhomepage"]);
+        this.snackBar.open("Address added successfully", 'OK', {
+          duration: environment.snackBarTime,
+        });
       }
     else{
       this.snackBar.open("Please enter all details", 'OK', {
         duration: environment.snackBarTime,
       });
     }
-}
+  }
+
+  deleteAddress(addrId : any){
+    this.dataService.deleteAddress(addrId).subscribe(res => {
+      this.snackBar.open("Address has been deleted", 'OK', {
+        duration: environment.snackBarTime,
+      });
+      window.location.reload();
+    });
+  }
 
 }

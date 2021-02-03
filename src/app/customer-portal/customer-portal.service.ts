@@ -67,4 +67,12 @@ export class customerPortalService {
     });
   }
 
+  deleteAddress(addressId : number) {
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };
+    return this.http.put<any>(this.userurl+"deleteAddress/"+addressId,httpOptions);
+  }
+
+  getServicesList() {
+    return this.http.get<{message: string; services:any; count: number}>( this.serviceurl + "getListForAppointment");
+  }
 }

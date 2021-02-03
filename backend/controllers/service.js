@@ -67,6 +67,26 @@ exports.getList = function (req, res) {
   Service.findAndCountAll({
     limit: pageSize,
     offset: pageSize * (currentPage - 1),
+  })
+    .then((result) => {
+      res
+        .status(200)
+        .json({
+          message: "Services extracted successfully",
+          services: result.rows,
+          count: result.count,
+        });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: error,
+      });
+    });
+};
+
+exports.getListForAppointment = function (req, res) {
+  Service.findAndCountAll({
     where: { IsActive: true }
   })
     .then((result) => {

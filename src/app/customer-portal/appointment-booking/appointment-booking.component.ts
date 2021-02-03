@@ -34,6 +34,8 @@ export class AppointmentBookingComponent implements OnInit {
   addressId : any;
   addressID : number;
   paymentId :number;
+  numberOfSP = 0;
+  minDate : Date = new Date();
 
   PaymentMethods : any[] =
   [{"PaymentMode_ID" : 1, "Mode" : "Online"},
@@ -47,7 +49,7 @@ export class AppointmentBookingComponent implements OnInit {
     this.userid = sessionStorage.getItem("UserID");
     console.log(this.userid);
 
-    this.dataservice.getServicesList(100,1)
+    this.service.getServicesList()
       .subscribe(res => {
         this.services = res.services;
       });
@@ -56,14 +58,14 @@ export class AppointmentBookingComponent implements OnInit {
         'ServiceID': new FormControl(null, Validators.required),
         'ServiceProviderID': new FormControl(null, Validators.required),
         'AppointmentDate': new FormControl(null, Validators.required),
-        'Time' : new FormControl(null, Validators.required),
+        'Time' : new FormControl(null, Validators.compose(
+          [Validators.max(10), Validators.required])),
         'AddressID' : new FormControl(null, Validators.required),
         'PaymentID' : new FormControl(null, Validators.required),
       });
 
     this.service.getAddresses(this.userid).subscribe(res => {
       this.address= res.addresses;
-      console.log(res);
     });
 
   }
@@ -75,26 +77,16 @@ export class AppointmentBookingComponent implements OnInit {
       this.selectedServiceID = serviceId;
       this.service.getServicesProviderListForEachService(serviceId)
         .subscribe( res => {
-          console.log(res);
           this.serviceProviders = res.serviceProvider;
-          //this.calculatePricePerHour();
+          this.numberOfSP = this.serviceProviders.length;
         });
-    }
+      }
   }
-
-  // calculatePricePerHour(){
-  //   if(this.serviceProviders){
-  //     this.pricePerHour = this.serviceProviders[0].serviceprovider.service.PricePerHour;
-  //     console.log(this.pricePerHour);
-  //   }
-  // }
 
   onServiceProviderSelection(serviceProviderId : any)
   {
     if(this.serviceProviderID){
-      console.log(serviceProviderId);
       this.pricePerHour = this.serviceProviders[0].PricePerHour;
-      console.log(this.pricePerHour);
     }
   }
 
@@ -110,9 +102,9 @@ export class AppointmentBookingComponent implements OnInit {
     this.totalPrice = this.totalTime * this.pricePerHour;
     this.service.createAppointment(+this.userid,this.form.value.ServiceProviderID, this.form.value.AppointmentDate, this.totalTime, this.totalPrice, this.form.value.PaymentID, this.addressID);
     this.router.navigate(['/userhomepage']);
+    this.snackBar.open("Appointment has been booked successfully", 'OK', {
+      duration: environment.snackBarTime,
+    });
   }
 
-  getAddressid(a: any){
-    console.log(a);
-  }
 }
