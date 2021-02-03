@@ -1,11 +1,13 @@
 table {
   width: 90%;
   margin: auto;
+  background-color: pink;
 }
 
 .mat-paginator {
   width: 90%;
   margin: auto;
+  background-color: pink;
 }
 
 .mat-form-field {
@@ -13,7 +15,7 @@ table {
   width: 88%;
   margin-top: 4%;
   margin-left: 5%;
-  background-color: white;
+  background-color: pink;
   padding: 1%;
 }
 
@@ -22,11 +24,13 @@ table {
   table {
     width: 90%;
     margin: auto;
+    background-color: pink;
   }
 
   .mat-paginator {
     width: 90%;
     margin: auto;
+    background-color: pink;
   }
 
   .mat-form-field {
@@ -34,7 +38,7 @@ table {
     width: 88%;
     margin-top: 4%;
     margin-left: 5%;
-    background-color: white;
+    background-color: pink;
     padding: 1%;
   }
 }
@@ -44,11 +48,13 @@ table {
   table {
     width: 90%;
     margin: auto;
+    background-color: pink;
   }
 
   .mat-paginator {
     width: 90%;
     margin: auto;
+    background-color: pink;
   }
 
   .mat-form-field {
@@ -56,7 +62,7 @@ table {
     width: 90%;
     margin-top: 4%;
     margin-left: 5%;
-    background-color: white;
+    background-color: pink;
     padding: 1%;
   }
 }

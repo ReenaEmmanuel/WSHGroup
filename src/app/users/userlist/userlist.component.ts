@@ -55,7 +55,7 @@ export class UserlistComponent implements OnInit  {
     console.log(element.id);
     this.dataservice.deactivateUser(element.id).
     subscribe(res => {
-      console.log(res);
+      window.location.reload();
       if(element.IsActive == true){
         this.snackBar.open("User has been deactivated", 'OK', {
           duration: environment.snackBarTime,
@@ -66,7 +66,6 @@ export class UserlistComponent implements OnInit  {
           duration: environment.snackBarTime,
         });
       }
-      window.location.reload();
     },
     error => {
       this.snackBar.open("Cannot Deactivate User", 'OK', {

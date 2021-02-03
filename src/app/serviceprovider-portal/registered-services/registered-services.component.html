@@ -28,8 +28,8 @@
   <ng-container matColumnDef="Deactivate">
     <th mat-header-cell *matHeaderCellDef> Register/Unregister </th>
     <td mat-cell *matCellDef="let element">
-      <a mat-raised-button color="warn" *ngIf="element.IsActive==true" (click)="unregister(element.id)"> Withdraw </a>
-      <a mat-raised-button color="warn" *ngIf="element.IsActive==false" (click)="unregister(element.id)"> Register </a>
+      <a mat-raised-button color="warn" *ngIf="element.IsActive==true" (click)="unregister(element)"> Withdraw </a>
+      <a mat-raised-button color="warn" *ngIf="element.IsActive==false" (click)="unregister(element)"> Register </a>
     </td>
   </ng-container>
 

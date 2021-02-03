@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { registeredServices } from 'src/app/models/registeredServices.model';
 import { Services } from 'src/app/models/services.model';
+import { environment } from 'src/environments/environment';
 import { SpPortalService } from '../serviceprovider-portal.service';
 
 @Component({
@@ -16,14 +18,13 @@ export class RegisteredServicesComponent implements OnInit {
   userid : any;
   services : registeredServices[] =[] ;
 
-  constructor(private dataservice : SpPortalService) { }
+  constructor(private dataservice : SpPortalService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.userid = sessionStorage.getItem("UserID");
     this.dataservice.getServiceList(this.userid)
     .subscribe(res => {
       this.dataSource = new MatTableDataSource(res.result);
-      console.log(res);
     });
   }
 
@@ -33,10 +34,19 @@ export class RegisteredServicesComponent implements OnInit {
 
   }
 
-  unregister(id: any){
-    this.dataservice.unregister(id).
+  unregister(element: any){
+    this.dataservice.unregister(element.id).
         subscribe(res => {
-          console.log(res);
+          if(element.IsActive == true){
+            this.snackBar.open("Service has been Withdrawn", 'OK', {
+              duration: environment.snackBarTime,
+            });
+          }
+          else{
+            this.snackBar.open("Service has been Registered", 'OK', {
+              duration: environment.snackBarTime,
+            });
+          }
           window.location.reload();
         });
   }

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { SpPortalService } from '../serviceprovider-portal.service';
 
 @Component({
@@ -13,14 +16,14 @@ export class SpAppointmentListComponent implements OnInit {
   userid: any;
   dataSource: MatTableDataSource<any>;
 
-  constructor(private dataservice : SpPortalService) { }
+  constructor(private dataservice : SpPortalService, private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
     this.userid = sessionStorage.getItem("UserID");
     this.dataservice.getAppointmentList(this.userid)
     .subscribe(res => {
-      this.dataSource = new MatTableDataSource(res.Appointments);
       console.log(res);
+      this.dataSource = new MatTableDataSource(res.Appointments);
     });
   }
 
@@ -32,8 +35,10 @@ export class SpAppointmentListComponent implements OnInit {
   close(id: any){
     this.dataservice.closeAppointment(id).
         subscribe(res => {
-          console.log(res);
-          window.location.reload();
+          this.snackBar.open("The Appointment has been closed", 'OK', {
+            duration: environment.snackBarTime,
+          });
+          this.router.navigate(["/registeredservices"]);
         });
   }
 }

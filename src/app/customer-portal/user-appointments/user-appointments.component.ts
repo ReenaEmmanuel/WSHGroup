@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Appointments } from 'src/app/models/appointment.model';
+import { environment } from 'src/environments/environment';
 import { customerPortalService } from '../customer-portal.service';
 
 @Component({
@@ -18,14 +20,13 @@ export class UserAppointmentsComponent implements OnInit {
   currentPage = 1;
   UserId : any;
 
-  constructor(private dataservice: customerPortalService) { }
+  constructor(private dataservice: customerPortalService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.UserId = sessionStorage.getItem("UserID");
     this.dataservice.getUserAppointmentList(this.UserId)
     .subscribe(res => {
       this.dataSource = new MatTableDataSource(res.Appointments[0].appointments);
-      console.log(this.dataSource);
     });
   }
 
@@ -37,7 +38,9 @@ export class UserAppointmentsComponent implements OnInit {
   cancel(id: any){
     this.dataservice.cancelAppointment(id).
         subscribe(res => {
-          console.log(res);
+          this.snackBar.open("Address has been deleted", 'OK', {
+            duration: environment.snackBarTime,
+          });
           window.location.reload();
         });
   }

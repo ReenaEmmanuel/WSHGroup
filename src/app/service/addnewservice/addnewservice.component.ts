@@ -43,7 +43,6 @@ export class AddnewserviceComponent implements OnInit{
           this.form.value.image
         );
       this.form.reset();
-      
     }
 
     onImagePicked(event: Event) {

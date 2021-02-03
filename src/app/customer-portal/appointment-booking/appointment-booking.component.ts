@@ -35,6 +35,7 @@ export class AppointmentBookingComponent implements OnInit {
   addressID : number;
   paymentId :number;
   numberOfSP = 0;
+  minDate : Date = new Date();
 
   PaymentMethods : any[] =
   [{"PaymentMode_ID" : 1, "Mode" : "Online"},
@@ -48,7 +49,7 @@ export class AppointmentBookingComponent implements OnInit {
     this.userid = sessionStorage.getItem("UserID");
     console.log(this.userid);
 
-    this.dataservice.getServicesList(100,1)
+    this.service.getServicesList()
       .subscribe(res => {
         this.services = res.services;
       });
@@ -57,7 +58,8 @@ export class AppointmentBookingComponent implements OnInit {
         'ServiceID': new FormControl(null, Validators.required),
         'ServiceProviderID': new FormControl(null, Validators.required),
         'AppointmentDate': new FormControl(null, Validators.required),
-        'Time' : new FormControl(null, Validators.required),
+        'Time' : new FormControl(null, Validators.compose(
+          [Validators.max(10), Validators.required])),
         'AddressID' : new FormControl(null, Validators.required),
         'PaymentID' : new FormControl(null, Validators.required),
       });
@@ -100,6 +102,9 @@ export class AppointmentBookingComponent implements OnInit {
     this.totalPrice = this.totalTime * this.pricePerHour;
     this.service.createAppointment(+this.userid,this.form.value.ServiceProviderID, this.form.value.AppointmentDate, this.totalTime, this.totalPrice, this.form.value.PaymentID, this.addressID);
     this.router.navigate(['/userhomepage']);
+    this.snackBar.open("Appointment has been booked successfully", 'OK', {
+      duration: environment.snackBarTime,
+    });
   }
 
 }
