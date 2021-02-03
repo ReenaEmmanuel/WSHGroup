@@ -161,7 +161,8 @@ exports.createAppointment = (req, res) => {
     PaymentMode: req.body.PaymentMode,
     TotalCost: req.body.TotalCost,
     IsPaid: req.body.IsPaid,
-    AddressID: req.body.AddressID
+    AddressID: req.body.AddressID,
+    ServiceID: req.body.ServiceID
   })
     .then((newpost) => {
       res.status(201).json({
@@ -179,6 +180,7 @@ exports.createAppointment = (req, res) => {
 exports.updateAppointment = function (req, res) {
   Appointment.update(
     {
+      ServiceID: req.body.ServiceID,
       ServiceProviderID: req.body.ServiceProviderID,
       AppointmentDate: req.body.AppointmentDate,
       StartTime: req.body.StartTime,
