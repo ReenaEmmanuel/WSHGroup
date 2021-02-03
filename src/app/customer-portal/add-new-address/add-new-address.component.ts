@@ -17,11 +17,17 @@ export class AddNewAddressComponent implements OnInit {
   addressForm : FormGroup;
   address : Address[] = [];
   userid : any;
+  usrRole: any;
 
   constructor(public dataService: customerPortalService, private router:Router, private snackBar: MatSnackBar ) { }
 
   ngOnInit(): void {
     this.userid = sessionStorage.getItem("UserID");
+    // this.usrRole = sessionStorage.getItem("UsrRole");
+
+    // if(this.usrRole != 2) {
+    //   this.router.navigate(['/login'])
+    // }
 
     this.dataService.getAddresses(this.userid).subscribe(res => {
       this.address= res.addresses;

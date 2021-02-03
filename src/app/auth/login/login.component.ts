@@ -5,7 +5,6 @@ import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 import { AuthService } from "../auth.service";
 
-
 @Component({
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"]

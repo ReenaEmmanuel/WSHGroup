@@ -90,7 +90,7 @@ export class AuthService {
               })
               this.router.navigate(["/login"]);
             }
-            
+
           }
         }
         else {
@@ -98,7 +98,7 @@ export class AuthService {
             duration: environment.snackBarTime,
           })
         }
-        
+
       },
         error => {
           this.snackBar.open("Please enter valid credentials", 'OK', {
@@ -118,6 +118,7 @@ export class AuthService {
     this.UsrRole = null;
     this.clearAuthData();
     this.router.navigate(["/login"]);
+    window.location.reload();
   }
 
   autoAuthUser() {

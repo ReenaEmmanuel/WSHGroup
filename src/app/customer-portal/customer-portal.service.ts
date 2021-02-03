@@ -55,8 +55,8 @@ export class customerPortalService {
       });
   }
 
-  createAppointment(AppUserID: number, ServiceProviderID: number, AppointmentDate: any, TotalTime:number, totalCost : number, paymentId : number, addressID: number){
-    const appointment: Appointments = { AppUserID: AppUserID, ServiceProviderID: ServiceProviderID, AppointmentDate: AppointmentDate, StartTime: null, EndTime: null, TotalTime: TotalTime, Status: 1, PaymentMode: paymentId, TotalCost: totalCost, IsPaid: 1, AddressID: addressID };
+  createAppointment(AppUserID: number, ServiceProviderID: number, ServiceID: number, AppointmentDate: any, TotalTime:number, totalCost : number, paymentId : number, addressID: number){
+    const appointment: Appointments = { AppUserID: AppUserID, ServiceProviderID: ServiceProviderID, ServiceID: ServiceID, AppointmentDate: AppointmentDate, StartTime: null, EndTime: null, TotalTime: TotalTime, Status: 1, PaymentMode: paymentId, TotalCost: totalCost, IsPaid: 1, AddressID: addressID };
     this.http
     .post(this.userurl+"createAppointment", appointment)
     .subscribe(response => {

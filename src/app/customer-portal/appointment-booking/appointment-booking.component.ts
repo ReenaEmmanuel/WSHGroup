@@ -100,7 +100,7 @@ export class AppointmentBookingComponent implements OnInit {
     console.log(this.form);
     this.totalTime = +this.form.value.Time;
     this.totalPrice = this.totalTime * this.pricePerHour;
-    this.service.createAppointment(+this.userid,this.form.value.ServiceProviderID, this.form.value.AppointmentDate, this.totalTime, this.totalPrice, this.form.value.PaymentID, this.addressID);
+    this.service.createAppointment(+this.userid,this.form.value.ServiceProviderID,this.serviceID, this.form.value.AppointmentDate, this.totalTime, this.totalPrice, this.form.value.PaymentID, this.addressID);
     this.router.navigate(['/userhomepage']);
     this.snackBar.open("Appointment has been booked successfully", 'OK', {
       duration: environment.snackBarTime,

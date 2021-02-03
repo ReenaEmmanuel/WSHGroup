@@ -104,7 +104,6 @@ exports.getSpList = function (req, res) {
 
 exports.getAppointmentList = function (req, res) {
   const appUserId = +req.params.id;
-  console.log(id);
   Appointment.findAll({
     attributes: [
       "id",

@@ -7,7 +7,7 @@
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" >
   <ng-container matColumnDef="Date">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-    <td mat-cell *matCellDef="let element"> {{element.appointments[0].AppointmentDate}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.AppointmentDate}} </td>
   </ng-container>
 
   <ng-container matColumnDef="ServiceName">
@@ -17,23 +17,23 @@
 
   <ng-container matColumnDef="ClientName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Client Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.appointments[0].ClientFirstName}} {{element.appointments[0].ClientLastName}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.ClientFirstName}} {{element.ClientLastName}} </td>
   </ng-container>
 
 
   <ng-container matColumnDef="Address">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
-    <td mat-cell *matCellDef="let element"> {{element.appointments[0].ClientAddressArea}} <br> {{element.appointments[0].ClientAddressContactNo}}  </td>
+    <td mat-cell *matCellDef="let element"> {{element.ClientAddressArea}} <br> {{element.ClientAddressContactNo}}  </td>
   </ng-container>
 
   <ng-container matColumnDef="TotalCost">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Cost </th>
-    <td mat-cell *matCellDef="let element"> {{element.appointments[0].TotalCost}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.TotalCost}} </td>
   </ng-container>
 
   <ng-container matColumnDef="Status">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-    <td mat-cell *matCellDef="let element"> {{element.appointments[0].Status}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
   </ng-container>
 
   <!-- <ng-container matColumnDef="Status">
@@ -47,10 +47,10 @@
    <ng-container matColumnDef="Close">
     <th mat-header-cell *matHeaderCellDef> Close Appointment </th>
     <td mat-cell *matCellDef="let element">
-      <a mat-raised-button color="warn" *ngIf="element.appointments[0].Status == 'Closed' || element.appointments[0].Status == 'Cancelled' " (click)="close(element.appointments[0].id)" disabled> Close </a>
-      <a mat-raised-button color="warn" *ngIf="element.appointments[0].Status == 'In Progress'" (click)="close(element.appointments[0].id)"> Close </a>
+      <a mat-raised-button color="warn" *ngIf="element.Status == 'Closed' || element.Status == 'Cancelled' " (click)="close(element.appointments[0].id)" disabled> Close </a>
+      <a mat-raised-button color="warn" *ngIf="element.Status == 'In Progress'" (click)="close(element.id)"> Close </a>
     </td>
-  </ng-container> 
+  </ng-container>
   <!--  -->
  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
