@@ -1,6 +1,10 @@
+'use strict';
 let server = require("../backend/routes/user-route");
-let chai = require("chai");
+let chai = require("chai"),
+  expect = chai.expect;
 let chaiHttp = require("chai-http");
+const UserController = require("../backend/controllers/user");
+const { should } = require("chai");
 
 chai.should();
 chai.use(chaiHttp);
@@ -8,6 +12,8 @@ chai.use(chaiHttp);
 //Get User List - test
 describe("Get User List /user/getUserList", () =>{
   it("It should get the User List"), (done) =>{
+    // var userList = UserController.getUserList();
+    // should.exist(userList.length);
     chai.request(server)
     .get("/user/getUserList")
     .end((err, response) => {
@@ -31,20 +37,22 @@ describe("Test create user /user/signup", () => {
       UsrRole: 2,
       IsActive: true
     };
-    chai
-      .request(server)
-      .post("/user/signup")
-      .send(user)
-      .end((err, res) => {
-        console.log(err);
-        res.should.have.status(200);
-        res.body.should.be.a("object");
-        res.body.should.have.property("message").eql("User added successfully");
-        //res.body.errors.should.have.property("pages");
-        //res.body.errors.pages.should.have.property("kind").eql("required");
-        done();
-      });
-  });
+    var newUser = UserController.signUp(user);
+    should.exist(newUser.FirstName);
+  //   chai
+  //     .request(server)
+  //     .post("/signup")
+  //     .send(user)
+  //     .end((err, res) => {
+  //       console.log(err);
+  //       res.should.have.status(200);
+  //       res.body.should.be.a("object");
+  //       res.body.should.have.property("message").eql("User added successfully");
+  //       //res.body.errors.should.have.property("pages");
+  //       //res.body.errors.pages.should.have.property("kind").eql("required");
+  //       done();
+  //     });
+    });
 });
 
 /*describe("/POST Login user", () => {
